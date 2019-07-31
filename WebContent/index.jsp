@@ -14,7 +14,7 @@
 	<!-- output the same thing, but using 
                                       jsp programming -->
 	<br>
-	<br> Enter username and password or sign up.
+	<br> Enter username and password or sign up.   
 	<br>
 	<br>
 	<form method="post" action="login.jsp">
