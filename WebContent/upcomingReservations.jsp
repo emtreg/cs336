@@ -35,7 +35,7 @@
 				<%
 				//parse out the results
 				while (result.next()) {
-				%>
+				%> 
 					<tr><td>out.print(result.getString("ticket_id"));</td>
 						<td>out.print(result.getString("flight_id"));</td>
 						<td>out.print(result.getString("depart_airport_id"));</td>

@@ -7,21 +7,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Flights</title>
-</head> 
+<title>Reserving Flight</title>
+</head>
 <body>
-	<center>	
-		<% //sort flights by diff criteria (price, take-off time, landing time)%>
-		<h3>Sort by</h3>
-		
-		<% //filter the list of flights by various criteria (price, nuber of stops, airline)%>
-		<h3>Filter</h3>
-	</center>
-
-	<h3>Flights</h3>
-	<% //let customers make flight reservations%>
-
-		<% //enter waitling list if flight is full -- Popup?%>
-
+	<h1>Reserve Flight</h1>
 </body>
 </html>
