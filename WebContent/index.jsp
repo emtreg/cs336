@@ -35,6 +35,9 @@
 	<form method="post" action="register.jsp">
 		<input type="submit" value="Create New Account">
 	</form>
-
+	<br>
+	<form method="post" action="employeeLogin.jsp">
+		<input type="submit" value="Employee Login">
+	</form>
 </body>
 </html>
