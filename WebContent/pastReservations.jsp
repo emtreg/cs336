@@ -10,7 +10,7 @@
 <title>Past Reservations</title>
 </head>
 <body>
-<h1>Past Reservations</h1>
+	<h1>Past Reservations</h1>
 	<%
 		try {
 			ApplicationDB db = new ApplicationDB();	
@@ -37,15 +37,11 @@
 				//parse out the results
 				while (result.next()) {
 				%>
-					<tr><td>
-					//Print out current bar or beer name:
-					out.print(result.getString("name"));</td>
-						<td>
-					//Print out current bar/beer additional info: Manf or Address
-					if (entity.equals("beers"))
-						out.print(result.getString("manf"));
-					else
-						out.print(result.getString("addr"));</td>
+					<tr><td>out.print(result.getString("ticket_id"));</td>
+						<td>out.print(result.getString("flight_id"));</td>
+						<td>out.print(result.getString("depart_airport_id"));</td>
+						<td>out.print(result.getString("arrival_airport_id"));</td>
+						<td>out.print(result.getString("airline_id"));</td>
 					</tr>
 				<%
 				}

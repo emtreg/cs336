@@ -27,7 +27,7 @@
 				String str="SELECT name FROM Airport";
 				ResultSet result= stmt.executeQuery(str);
 				
-				while(result.next()){
+				while(result.next()){ 
 					%>
 					<option value= "<%=result.getString("name")%>">
 						<%=result.getString("name")%>

@@ -11,7 +11,7 @@
 </head>
 <body>
 	<center>	
-		<% //sort flights by diff criteria (prce, take-off time, landing time)%>
+		<% //sort flights by diff criteria (price, take-off time, landing time)%>
 		<h3>Sort by</h3>
 		
 		<% //filter the list of flights by various criteria (price, nuber of stops, airline)%>

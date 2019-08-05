@@ -9,7 +9,54 @@
 <title>Reservations</title>
 </head>
 <body>
-
-<% //cancel flight reservations (if it is business or first class)%>
+	<h1>Past Reservations</h1>
+	<%
+		try {
+			ApplicationDB db = new ApplicationDB();	
+			Connection con = db.getConnection();		
+			Statement stmt = con.createStatement();
+			
+			//Get the selected radio button from the index.jsp
+			String entity = request.getParameter("command");
+			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
+			String str = "SELECT * FROM Reservations where user_id=" + entity;
+			//Run the query against the database.
+			ResultSet result = stmt.executeQuery(str);
+			%>
+				
+			<table>
+				<tr><td>Ticket Number</td>
+					<td>Flight</td>
+					<td>Departure</td>
+					<td>Arrived</td>
+					<td>Airline</td>
+				</tr>
+				
+				<%
+				//parse out the results
+				while (result.next()) {
+				%>
+					<tr><td>out.print(result.getString("ticket_id"));</td>
+						<td>out.print(result.getString("flight_id"));</td>
+						<td>out.print(result.getString("depart_airport_id"));</td>
+						<td>out.print(result.getString("arrival_airport_id"));</td>
+						<td>out.print(result.getString("airline_id"));</td>
+						
+						<% //cancel flight reservations (if it is business or first class)%>
+						<form method="post" action="logout.jsp">
+							<input type="submit" value="Cancel Reservation">
+						</form>
+					</tr>
+				<%
+				}
+				%>
+			</table>
+			<%
+			//close the connection.
+			db.closeConnection(con);
+		} catch (Exception e) {
+			out.print(e);
+		}
+	%>
 </body>
 </html>
