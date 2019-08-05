@@ -28,11 +28,12 @@
 		String pwd = request.getParameter("password");
 		//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 		String str = "SELECT * FROM user WHERE user_id = '" + name +"' and password= '"+ pwd +"'";
-
+		//String stradm = "SELECT * FROM user WHERE user_id = '" + name +"' and password= '"+ pwd +"' and type='admin'";
 		//Run the query against the database.
 		//if user does not match any from db then do ERROR
-		ResultSet result = stmt.executeQuery(str);
+		ResultSet result=stmt.executeQuery(str);
 		
+
 		if (result.next()) {
 	        session.setAttribute("user", name); // the username will be stored in the session
 	        out.println("welcome " + name);
