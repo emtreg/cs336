@@ -38,7 +38,7 @@
 		<h2> Search for Flights </h2>
 		<form method="post" action="browseFlights.jsp">
 			<td>Departure Airport: <select>
-				<%
+				<% 
 				try{
 					ApplicationDB db = new ApplicationDB();	
 					Connection con = db.getConnection();

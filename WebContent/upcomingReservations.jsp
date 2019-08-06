@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1>Past Reservations</h1>
-	<%
+	<%  
 		try {
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();		
