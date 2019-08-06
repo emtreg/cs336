@@ -12,78 +12,108 @@
 	<div class= "header">
 		<h1>Customer Home</h1>
 	</div>
+	<%   
+	try {
+		ApplicationDB db = new ApplicationDB();	
+		Connection con = db.getConnection();
+		Statement stmt = con.createStatement();
+
+		String name = request.getParameter("user_id");
+		String pwd = request.getParameter("password");
+		String str = "SELECT * FROM user WHERE user_id = '" + name +"' and password= '"+ pwd +"'";
+		
+		ResultSet result=stmt.executeQuery(str);
 	
+		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
+		result.close();
+		stmt.close();
+		con.close();
+		
+	} catch (Exception ex) {
+		out.print("ERROR: Username does not exist");
+	}
+	%>
 	<center>
 		<% //Search for flights (oneway, round-trip, flexible date/time)%>
-		<h3> Search for Flights </h3>
+		<h2> Search for Flights </h2>
 		<form method="post" action="browseFlights.jsp">
-		<td>Departure Airport: <select>
-			<%
-			try{
-				ApplicationDB db = new ApplicationDB();	
-				Connection con = db.getConnection();
-				Statement stmt = con.createStatement();
-				
-				String str="SELECT name FROM Airport";
-				ResultSet result= stmt.executeQuery(str);
-				
-				while(result.next()){  
-					%>
-					<option value= "<%=result.getString("name")%>">
+			<td>Departure Airport: <select>
+				<%
+				try{
+					ApplicationDB db = new ApplicationDB();	
+					Connection con = db.getConnection();
+					Statement stmt = con.createStatement();
+					
+					String str="SELECT name FROM Airport";
+					ResultSet result= stmt.executeQuery(str);
+					
+					while(result.next()){  
+						%>
+						<option value= "<%=result.getString("name")%>">
+							<%=result.getString("name")%>
+						</option>
+						<%				
+					}
+					//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
+					result.close();
+					stmt.close();
+					con.close();
+				}
+				catch(Exception e){
+					out.print(e.getMessage());
+				}
+				%>
+			</select></td>	
+			-- Going To -->
+			<td>Arrival Airport: <select>
+				<%
+				try{
+					ApplicationDB db = new ApplicationDB();	
+					Connection con = db.getConnection();
+					Statement stmt = con.createStatement();
+					
+					String str="SELECT name FROM Airport";
+					ResultSet result= stmt.executeQuery(str);
+					
+					while(result.next()){
+						%>
+						<option value= "<%=result.getString("name")%>">
 						<%=result.getString("name")%>
-					</option>
-					<%				
+						</option>
+						<%				
+					}
+					//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
+					result.close();
+					stmt.close();
+					con.close();
 				}
-			}
-			catch(Exception e){
-				out.print(e.getMessage());
-			}
-			%>
-		</select></td>	
-		-- Going To -->
-		<td>Arrival Airport: <select>
-			<%
-			try{
-				ApplicationDB db = new ApplicationDB();	
-				Connection con = db.getConnection();
-				Statement stmt = con.createStatement();
-				
-				String str="SELECT name FROM Airport";
-				ResultSet result= stmt.executeQuery(str);
-				
-				while(result.next()){
-					%>
-					<option value= "<%=result.getString("name")%>">
-					<%=result.getString("name")%>
-					</option>
-					<%				
+				catch(Exception e){
+					out.print(e.getMessage());
 				}
-			}
-			catch(Exception e){
-				out.print(e.getMessage());
-			}
-			%>		
-		</select></td>
-		<td>
-			<br><input type="radio" name="command" value="oneWay"/>One-Way
- 			<br><input type="radio" name="command" value="roundTrip"/>Round-Trip
-  			<br>
-		</td>
-		<td>
-			<br>Flights within <input type=text name="flexibility"> days of <input type=text name="date">
-		</td>
-		<br><input type="submit" value="Search">
+				%>		
+			</select></td>
+			<td>
+				<br><input type="radio" name="command" value="oneWay"/>One-Way
+	 			<br><input type="radio" name="command" value="roundTrip"/>Round-Trip
+	  			<br>
+			</td>
+			<td>
+				<br>Flights within <input type=text name="flexibility"> days of <input type=text name="date">
+			</td>
+			<br><input type="submit" value="Search">
 		</form>	
 	</center>			
 				
 	<center><br><br>
-		<h3> Flight Reservations </h3>
+		<h2> Flight Reservations </h2>
 		<% //view all past resverations with their details
 		   //view all the upcoming reservations with their details%>
-		<form method="post" action="customerReservations.jsp">
-			<input type="submit" value="View Past Reservations"/>
-			<input type="submit" value="View Upcoming Reservations"/>
+		<form method="post" action="pastReservations.jsp">
+			<input type="submit" name="viewChoice" value="View Past Reservations"/>
 		</form>
+		<form method="post" action="upcomingReservations.jsp">
+			<input type="submit" name="viewChoice" value="View Upcoming Reservations"/>
+		</form>	
 	</center>
 	
 	<form method="post" action="logout.jsp">

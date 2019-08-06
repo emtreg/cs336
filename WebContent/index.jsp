@@ -17,7 +17,7 @@
 	<br> Enter username and password or sign up.   
 	<br>
 	<br>
-	<form method="post" action="login.jsp">
+	<form method="post" action="customerHome.jsp">
 		<table>
 			<tr>
 				<td>Username</td>

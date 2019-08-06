@@ -20,17 +20,17 @@
 			//Get the selected radio button from the index.jsp
 			String entity = request.getParameter("command");
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-			String str = "SELECT * FROM Reservations where user_id=" + entity;
+			String str = "SELECT * FROM Reservations where user_id='" + entity+ "';";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
 			%>
 				
 			<table>
-				<tr><td>Ticket Number</td>
-					<td>Flight</td>
-					<td>Departure</td>
-					<td>Arrived</td>
-					<td>Airline</td>
+				<tr><td><b>Ticket Number</b></td>
+					<td><b>Flight</b></td>
+					<td><b>Departure</b></td>
+					<td><b>Arrived</b></td>
+					<td><b>Airline</b></td>
 				</tr>
 				
 				<%
