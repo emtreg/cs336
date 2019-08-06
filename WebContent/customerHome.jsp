@@ -45,18 +45,19 @@
 					<td>Departure Airport: <select>
 						<% 
 						try{
-							String q1="SELECT name FROM Airport";
+							String q1="SELECT name, airport_id FROM Airport";
 							ResultSet portList= stmt.executeQuery(q1);
 							
+							out.print("<select name=)
 							while(portList.next()){  
 								%>
-									<option name="depart" value="<%=portList.getString("name")%>">
-										<%=portList.getString("name")%>
+									<option name="depart" value="<%=portList.getString("airport_id")%>">
+										<%=portList.getString("name")%> (<%=portList.getString("airport_id")%>)
 									</option>						
 								<%				
 							}
 							portList.close();
-						}
+						} 
 						catch(Exception e){
 							out.print(e.getMessage());
 						}
@@ -66,13 +67,13 @@
 					<td>Arrival Airport: <select>
 						<%
 						try{
-							String q2="SELECT name FROM Airport";
+							String q2="SELECT name, airport_id FROM Airport";
 							ResultSet portList2= stmt.executeQuery(q2);
 							
 							while(portList2.next()){
 								%>
-								<option name="arrival" value= "<%=portList2.getString("name")%>">
-								<%=portList2.getString("name")%>
+								<option name="arrival" value= "<%=portList2.getString("airport_id")%>">
+								<%=portList2.getString("name")%> (<%=portList2.getString("airport_id")%>)
 								</option>
 								<%				
 							}

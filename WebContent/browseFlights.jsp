@@ -12,13 +12,82 @@
 <body>
 	<h3>Flights</h3>
 	<%try{
+		ApplicationDB db = new ApplicationDB();	
+		Connection con = db.getConnection();		
+		Statement stmt = con.createStatement(); 
 		
-	}
-	catch (Exception e) {
+		String depart= request.getParameter("depart");
+		String arrival= request.getParameter("arrival");
+		out.print("d "+depart);
+		out.print("a "+arrival);
+		String str= "Select * from Flights where depart_airport_id= '"+depart+"' and arrival_airport_id='"+arrival+"';";
+		
+		ResultSet flights = stmt.executeQuery(str);
+		%>	
+		<table>
+				<tr><td><b>Flight #</b></td>
+					<td><b>Departure Airport</b></td>
+					<td><b>Departure Time</b></td>
+					<td><b>Arrival Airport</b></td>
+					<td><b>Arrival Time</b></td>
+					<td><b>Class</b></td>
+					<td><b>Flight Type</b></td>
+					<td><b>Aircraft</b></td>
+					<td><b>Airline</b></td>
+					<td><b>Total Cost</b></td>
+				</tr>
+				
+				<%
+				//parse out the results
+				while (flights.next()) {
+					out.print("<tr><td>");
+					out.print(flights.getString("flight_num"));					
+					out.print("</td>");
+					out.print("<td>");
+					out.print("</td>");
+					out.print("<td>");					
+					out.print(flights.getString("depart_airport_id"));					
+					out.print("</td>");
+					out.print("<td>");
+					out.print("</td>");
+					out.print("<td>");					
+					out.print(flights.getString("arrival_airport_id"));					
+					out.print("</td>");
+					out.print("<td>");
+					out.print("</td>");
+					out.print("<td>");					
+					out.print(flights.getString("depart_time"));
+					out.print("</td>");	
+					out.print("<td>");					
+					out.print(flights.getString("arrival_time"));
+					out.print("</td>");	
+					out.print("<td>");					
+					out.print(flights.getString("flight_type"));
+					out.print("</td>");
+					out.print("<td>");		
+					out.print("</td>");	
+					out.print("<td>");		
+					out.print("</td>");	
+					out.print("<td>");		
+					out.print("</td>");	
+					out.print("<td>");					
+					out.print(flights.getString("aircraft_id"));
+					out.print("</td>");	
+					out.print("<td>");		
+					out.print("</td>");	
+					out.print("<td>");		
+					out.print("</td>");	
+					out.print("<td>");					
+					out.print(flights.getString("airline_id"));
+					out.print("</td>");	
+					out.print("</tr>");
+				}
+	}catch (Exception e) {
 		out.print(e);
 	}
-	%>
-	<% //let customers make flight reservations%>
+				%>
+		</table>
+		<% //let customers make flight reservations%>
 
 		<% //enter waitling list if flight is full -- Popup?%>
 	<center>	
