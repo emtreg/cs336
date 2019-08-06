@@ -10,7 +10,7 @@
 <% out.println("What would you like to do?"); %>
 <br>
 <br>
-	<form method="post" action="addCustomRep.jsp">
+	<form method="post" action="editAccInfo.jsp"> <%//TBD %>
 	<input type="submit" value="Create or edit a Customer Representative account">
 	</form>
 <br>
@@ -20,7 +20,7 @@
 	</form>
 <br>
 <br>
-	<form method="post" action="reserv.jsp">
+	<form method="post" action="reserv.jsp"> <%//What kind of info is needed? %>
 	<input type="submit" value="Obtain a list of reservations">
 	</form>
 <br>
