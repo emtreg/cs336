@@ -17,7 +17,8 @@
 			Statement stmt = con.createStatement();
 			
 			//Get the selected radio button from the index.jsp
-			String entity = request.getParameter("viewChoice");
+			String entity = request.getParameter("command");
+			out.print(entity);
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
 			String str = "SELECT * FROM Reservations where user_id='" + entity+ "';";
 			//Run the query against the database.
@@ -26,9 +27,12 @@
 				
 			<table>
 				<tr><td><b>Ticket Number</b></td>
-					<td><b>Flight</b></td>
-					<td><b>Departure</b></td>
-					<td><b>Arrived</b></td>
+					<%/*<td><b>Flight</b></td>*/%>
+					<td><b>Departure Airport</b></td>
+					<td><b>Arrival Airport</b></td>
+					<td><b>Departure Time</b></td>
+					<td><b>Arrival Time</b></td>
+					<td><b>Aircraft</b></td>
 					<td><b>Airline</b></td>
 				</tr>
 				
@@ -36,11 +40,14 @@
 				//parse out the results
 				while (result.next()) {
 				%> 
-					<tr><td>out.print(result.getString("ticket_id"));</td>
-						<td>out.print(result.getString("flight_id"));</td>
-						<td>out.print(result.getString("depart_airport_id"));</td>
-						<td>out.print(result.getString("arrival_airport_id"));</td>
-						<td>out.print(result.getString("airline_id"));</td>
+					<tr><td><%= result.getString("ticket_num")%></td>
+						<td><%= result.getString("depart_airport_id")%></td>
+						<td><%= result.getString("arrival_airport_id")%></td>
+						<td><%= result.getString("depart_time")%></td>
+						<td><%= result.getString("arrival_time")%></td>
+						<td><%= result.getString("flight_type")%></td>
+						<td><%= result.getString("aircraft_id")%></td>
+						<td><%= result.getString("airline_id")%></td>
 						
 						<% //cancel flight reservations (if it is business or first class)%>
 						<form method="post" action="logout.jsp">

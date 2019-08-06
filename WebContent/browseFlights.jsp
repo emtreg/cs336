@@ -10,6 +10,17 @@
 <title>Flights</title>
 </head> 
 <body>
+	<h3>Flights</h3>
+	<%try{
+		
+	}
+	catch (Exception e) {
+		out.print(e);
+	}
+	%>
+	<% //let customers make flight reservations%>
+
+		<% //enter waitling list if flight is full -- Popup?%>
 	<center>	
 		<% //sort flights by diff criteria (price, take-off time, landing time)%>
 		<h3>Sort by</h3>
@@ -17,11 +28,5 @@
 		<% //filter the list of flights by various criteria (price, nuber of stops, airline)%>
 		<h3>Filter</h3>
 	</center>
-
-	<h3>Flights</h3>
-	<% //let customers make flight reservations%>
-
-		<% //enter waitling list if flight is full -- Popup?%>
-
 </body>
 </html>
