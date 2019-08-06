@@ -36,8 +36,17 @@
 
 		if (result.next()) {
 	        session.setAttribute("user", name); // the username will be stored in the session
-	        out.println("welcome " + name);
+	        out.println("Welcome, " + name+"!");
 	        
+			if(result.getString("type").equals("admin")){
+				%>
+				<br>
+				<br>
+				 <form method="post" action="AdminPage.jsp">
+				<input type="submit" value="Head to Admin Homepage">
+			</form>
+				<%
+			}
 	        //Loggin out option
 	        %>
 	        <br>
