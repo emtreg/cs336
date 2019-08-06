@@ -21,7 +21,7 @@
 			String entity = request.getParameter("command");
 			out.print(entity);
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-			String str = "SELECT * FROM Reservations join  where user_id='" + entity+ "';";  
+			String str = "SELECT * FROM Reservations join Tickets using (ticket_num) where user_id='" + entity+ "';";  
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str); 
 			%>

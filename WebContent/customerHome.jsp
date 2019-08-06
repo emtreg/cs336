@@ -48,7 +48,7 @@
 							String q1="SELECT name, airport_id FROM Airport";
 							ResultSet portList= stmt.executeQuery(q1);
 							
-							out.print("<select name=)
+							//out.print("<select name=)");
 							while(portList.next()){  
 								%>
 									<option name="depart" value="<%=portList.getString("airport_id")%>">
