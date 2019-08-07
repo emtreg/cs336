@@ -24,7 +24,7 @@
 		//if user does not match any from db then do ERROR
 		ResultSet result=stmt.executeQuery(str);
 		
-		if (result.next()) {
+		if (result.next()&&result.getString("type").equals("customer")) {
 	        session.setAttribute("user", name); // the username will be stored in the session        
 	        %>
 	        <h1> Welcome <%=name%>!</h1>
@@ -100,7 +100,18 @@
 				<br><br><input type="submit" value="Logout">
 			</form>
 	    <%
-	    } else {
+	    }else if(result.getString("type").equals("admin")){
+			%>
+			<h1>Welcome, Admin!</h1>
+			<br>
+			<br>
+			 <form method="post" action="AdminPage.jsp">
+			<input type="submit" value="Head to Admin Homepage">
+		</form>
+			<%
+		}
+		
+		else {
 	        out.println("Invalid login");
 	    }
 		

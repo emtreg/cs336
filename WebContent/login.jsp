@@ -47,15 +47,6 @@
 			</form>
 				<%
 			}
-			if(result.getString("type").equals("customer")){
-				%>
-				<br>
-				<br>
-				 <form method="post" action="customerHome.jsp">
-				<input type="submit" value="Head to Homepage">
-			</form>
-				<%
-			}
 	        //Loggin out option
 	        %>
 	        <br>
