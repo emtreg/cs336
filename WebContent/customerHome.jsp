@@ -24,12 +24,12 @@
 		//if user does not match any from db then do ERROR
 		ResultSet result=stmt.executeQuery(str);
 		
-		if (result.next()) {
+		if (result.next()&&result.getString("type").equals("customer")) {
 	        session.setAttribute("user", id); // the username will be stored in the session        
-	        out.print("Welcome "+id+"!");
-
-			%>
-			<center> <!--view all past and upcoming reservations with their details-->
+	        %>
+	        <h1> Welcome <%=id%>!</h1>
+	        
+			<center><% //view all past and upcoming reservations with their details%>
 				<h2>Flight Reservations </h2>
 				<form method="post" action="pastReservations.jsp">
 					<button type="submit" name="command" value="<%=id%>">View Past Reservations</button> 
@@ -39,7 +39,7 @@
 				</form>
 			</center>
 		
-			<center><!--Search for flights (oneway, round-trip, flexible date/time)-->
+			<center><% //Search for flights (oneway, round-trip, flexible date/time)%>
 				<h2> Search for Flights </h2>
 				<form method="post" action="browseFlights.jsp">
 					<td>Departure Airport: <select name="depart">
@@ -48,6 +48,7 @@
 							String q1="SELECT name, airport_id FROM Airport";
 							ResultSet portList= stmt.executeQuery(q1);
 							
+							//out.print("<select name=)");
 							while(portList.next()){  
 								%>
 									<option name="depart" value="<%=portList.getString("airport_id")%>">
@@ -72,7 +73,7 @@
 							while(portList2.next()){
 								%>
 								<option name="arrival" value= "<%=portList2.getString("airport_id")%>">
-									<%=portList2.getString("name")%> (<%=portList2.getString("airport_id")%>)
+								<%=portList2.getString("name")%> (<%=portList2.getString("airport_id")%>)
 								</option>
 								<%				
 							}
@@ -99,7 +100,18 @@
 				<br><br><input type="submit" value="Logout">
 			</form>
 	    <%
-	    } else {
+	    }else if(result.getString("type").equals("admin")){
+			%>
+			<h1>Welcome, Admin!</h1>
+			<br>
+			<br>
+			 <form method="post" action="AdminPage.jsp">
+			<input type="submit" value="Head to Admin Homepage">
+		</form>
+			<%
+		}
+		
+		else {
 	        out.println("Invalid login");
 	    }
 		
