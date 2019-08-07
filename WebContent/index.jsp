@@ -11,8 +11,7 @@
 </head>
 <body>
 	<% out.println("Login or Sign Up"); %>
-	<!-- output the same thing, but using 
-                                      jsp programming -->
+
 	<br>
 	<br> Enter username and password or sign up.   
 	<br>

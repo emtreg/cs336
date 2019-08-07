@@ -15,40 +15,39 @@
 		Connection con = db.getConnection();
 		Statement stmt = con.createStatement();
 		
-		String name = request.getParameter("user_id");
+		String id = request.getParameter("user_id");
 		String pwd = request.getParameter("password");
 		//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-		String str = "SELECT * FROM user WHERE user_id = '" + name +"' and password= '"+ pwd +"'";
+		String str = "SELECT * FROM user WHERE user_id = '" + id +"' and password= '"+ pwd +"'";
 		//String stradm = "SELECT * FROM user WHERE user_id = '" + name +"' and password= '"+ pwd +"' and type='admin'";
 		//Run the query against the database.
 		//if user does not match any from db then do ERROR
 		ResultSet result=stmt.executeQuery(str);
 		
 		if (result.next()) {
-	        session.setAttribute("user", name); // the username will be stored in the session        
-	        %>
-	        <h1> Welcome <%=name%>!</h1>
-	        
-			<center><% //view all past and upcoming reservations with their details%>
+	        session.setAttribute("user", id); // the username will be stored in the session        
+	        out.print("Welcome "+id+"!");
+
+			%>
+			<center> <!--view all past and upcoming reservations with their details-->
 				<h2>Flight Reservations </h2>
 				<form method="post" action="pastReservations.jsp">
-					<button type="submit" name="command" value="<%=name%>">View Past Reservations</button> 
+					<button type="submit" name="command" value="<%=id%>">View Past Reservations</button> 
 				</form>
 				<form method="post" action="upcomingReservations.jsp">
-					<button type="submit" name="command" value="<%=name%>">View Upcoming Reservations</button> 
+					<button type="submit" name="command" value="<%=id%>">View Upcoming Reservations</button> 
 				</form>
 			</center>
 		
-			<center><% //Search for flights (oneway, round-trip, flexible date/time)%>
+			<center><!--Search for flights (oneway, round-trip, flexible date/time)-->
 				<h2> Search for Flights </h2>
 				<form method="post" action="browseFlights.jsp">
-					<td>Departure Airport: <select>
+					<td>Departure Airport: <select name="depart">
 						<% 
 						try{
 							String q1="SELECT name, airport_id FROM Airport";
 							ResultSet portList= stmt.executeQuery(q1);
 							
-							//out.print("<select name=)");
 							while(portList.next()){  
 								%>
 									<option name="depart" value="<%=portList.getString("airport_id")%>">
@@ -64,7 +63,7 @@
 						%>
 					</select></td>	
 					-- Going To -->
-					<td>Arrival Airport: <select>
+					<td>Arrival Airport: <select name="arrival">
 						<%
 						try{
 							String q2="SELECT name, airport_id FROM Airport";
@@ -73,7 +72,7 @@
 							while(portList2.next()){
 								%>
 								<option name="arrival" value= "<%=portList2.getString("airport_id")%>">
-								<%=portList2.getString("name")%> (<%=portList2.getString("airport_id")%>)
+									<%=portList2.getString("name")%> (<%=portList2.getString("airport_id")%>)
 								</option>
 								<%				
 							}
@@ -85,8 +84,8 @@
 						%>		
 					</select></td>
 					<td>
-						<br><input type="radio" name="command" value="oneWay"/>One-Way
-			 			<br><input type="radio" name="command" value="roundTrip"/>Round-Trip
+						<br><input type="radio" name="trip" value="OneWay"/>One-Way
+			 			<br><input type="radio" name="trip" value="RoundTrip"/>Round-Trip
 			  			<br>
 					</td>
 					<td>

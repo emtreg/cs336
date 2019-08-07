@@ -5,11 +5,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style>
+	table, th, td{
+		border:1px solid black;
+		border-collapse: collapse;
+	}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Reservations</title>
 </head>
 <body>
-	<h1>Past Reservations</h1>
+	<h1>Upcoming Reservations</h1>
 	<%  
 		try {
 			ApplicationDB db = new ApplicationDB();	
@@ -18,22 +24,23 @@
 			
 			//Get the selected radio button from the index.jsp
 			String entity = request.getParameter("command");
-			out.print(entity);
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-			String str = "SELECT * FROM Reservations JOIN Tickets using(ticket_num) JOIN Flights using (flight_num) where user_id='" + entity+ "';";
+			String select = "SELECT * FROM Flights f ";
+			String join  = "JOIN Reservations r on (r.flight_num=f.flight_num) JOIN Tickets t using(ticket_num)";
+			String where = "WHERE r.user_id='" + entity+ "';";
 			//Run the query against the database.
-			ResultSet result = stmt.executeQuery(str);
+			ResultSet result = stmt.executeQuery(select+join+where);
 			%>
 				
-			<table>
-				<tr><td><b>Ticket Number</b></td>
-					<%/*<td><b>Flight</b></td>*/%>
-					<td><b>Departure Airport</b></td>
-					<td><b>Arrival Airport</b></td>
-					<td><b>Departure Time</b></td>
-					<td><b>Arrival Time</b></td>
-					<td><b>Aircraft</b></td>
-					<td><b>Airline</b></td> 
+			<table frame="box" style="width:90%">
+				<tr><th><b>Flight #</b></th>
+					<th><b>Departure Airport</b></th>
+					<th><b>Departure Time</b></th>
+					<th><b>Arrival Airport</b></th>
+					<th><b>Arrival Time</b></th>
+					<th><b>Flight Type</b></th>
+					<th><b>Aircraft</b></th>
+					<th><b>Airline</b></th>
 				</tr>
 				
 				<%
@@ -49,7 +56,7 @@
 						<td><%= result.getString("aircraft_id")%></td>
 						<td><%= result.getString("airline_id")%></td>
 						
-						<% //cancel flight reservations (if it is business or first class)%>
+						<!--cancel flight reservations (if it is business or first class)-->
 						<form method="post" action="logout.jsp">
 							<input type="submit" value="Cancel Reservation">
 						</form>

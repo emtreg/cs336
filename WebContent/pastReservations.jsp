@@ -6,6 +6,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style>
+	table, th, td{
+		border:1px solid black;
+		border-collapse: collapse;
+	}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Past Reservations</title>
 </head>
@@ -21,20 +27,20 @@
 			String entity = request.getParameter("command");
 			out.print(entity);
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-			String str = "SELECT * FROM Reservations join Tickets using (ticket_num) where user_id='" + entity+ "';";  
+			String str = "SELECT * FROM Reservations join Flights using (flight_num) where user_id='" + entity+ "';";  
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str); 
 			%>
 				
-			<table>
-				<tr><td><b>Ticket Number</b></td>
-					<td><b>Flight</b></td>
-					<td><b>Departure</b></td>
-					<td><b>Arrival</b></td>
-					<td><b>Departure Time</b></td>
-					<td><b>Arrival Time</b></td>
-					<td><b>Aircraft</b></td>
-					<td><b>Airline</b></td>
+			<table frame="box" style="width:90%">
+				<tr><th><b>Flight #</b></th>
+					<th><b>Departure Airport</b></th>
+					<th><b>Departure Time</b></th>
+					<th><b>Arrival Airport</b></th>
+					<th><b>Arrival Time</b></th>
+					<th><b>Flight Type</b></th>
+					<th><b>Aircraft</b></th>
+					<th><b>Airline</b></th>
 				</tr>
 				
 				<%

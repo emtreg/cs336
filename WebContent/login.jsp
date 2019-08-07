@@ -12,14 +12,11 @@
 <body>
 	<%   
 	try {
-
 		//Get the database connection
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();
-
 		//Create a SQL statement
 		Statement stmt = con.createStatement();
-
 		//Get parameters from the HTML form at the HelloWorld.jsp
 		//String username = request.getParameter("user_id");
 		//String password = request.getParameter("password");
@@ -33,7 +30,6 @@
 		//if user does not match any from db then do ERROR
 		ResultSet result=stmt.executeQuery(str);
 		
-
 		if (result.next()) {
 	        session.setAttribute("user", name); // the username will be stored in the session
 	        out.println("Welcome, " + name+"!");
@@ -44,6 +40,15 @@
 				<br>
 				 <form method="post" action="AdminPage.jsp">
 				<input type="submit" value="Head to Admin Homepage">
+			</form>
+				<%
+			}
+			if(result.getString("type").equals("customer")){
+				%>
+				<br>
+				<br>
+				 <form method="post" action="customerHome.jsp">
+				<input type="submit" value="Head to Homepage">
 			</form>
 				<%
 			}
