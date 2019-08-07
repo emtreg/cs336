@@ -105,9 +105,9 @@
 			<h1>Welcome, Admin!</h1>
 			<br>
 			<br>
-			 <form method="post" action="AdminPage.jsp">
-			<input type="submit" value="Head to Admin Homepage">
-		</form>
+			<form method="post" action="AdminPage.jsp">
+				<input type="submit" value="Head to Admin Homepage">
+			</form>
 			<%
 		}
 		

@@ -10,6 +10,9 @@
 		border:1px solid black;
 		border-collapse: collapse;
 	}
+	td{
+		text-align: center;
+	}
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Reservations</title>
@@ -26,7 +29,7 @@
 			String entity = request.getParameter("command");
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
 			String select = "SELECT * FROM Flights f ";
-			String join  = "JOIN Reservations r on (r.flight_num=f.flight_num) JOIN Tickets t using(ticket_num)";
+			String join  = "JOIN Reservations r on (r.flight_num=f.flight_num) JOIN Tickets t using(user_id)";
 			String where = "WHERE r.user_id='" + entity+ "';";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(select+join+where);
