@@ -110,7 +110,6 @@
 			</form>
 			<%
 		}
-		
 		else {
 	        out.println("Invalid login");
 	    }

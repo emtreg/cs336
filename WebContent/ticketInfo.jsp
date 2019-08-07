@@ -18,6 +18,7 @@
 <title>Ticket Information</title>
 </head>
 <body>
+	<h1>Ticket Information</h1>
 	<%
 	try{
 		ApplicationDB db = new ApplicationDB();	

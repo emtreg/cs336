@@ -28,13 +28,15 @@
 		String depart= request.getParameter("depart");
 		String arrival= request.getParameter("arrival");
 		String trip= request.getParameter("trip");
+		String flex= request.getParameter("flexibility");
+		String date= request.getParameter("date");		
 		
 		//Getting OneWay DB or RoundTrip DB
 		String select= "Select * from "+trip;
 		String join=" JOIN Flights f using (flight_num)";
-		String where= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+"';";
+		String wherePort= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+"';";
 		
-		ResultSet flights = stmt.executeQuery(select+join+where);
+		ResultSet flights = stmt.executeQuery(select+join+wherePort);
 		
 		%>	
 		<table frame="box" style="width:90%">
@@ -75,7 +77,11 @@
 						<%
 					}
 				%>
-			</tr>					
+				<!--let customers make flight reservations-->
+				<td><form method="post" action="ticketInfo.jsp">
+							<button type="submit" name="ticket" value="<%=flights.getString("flight_num")%>">Reserve Spot for Flight</button> 
+					</form></td>
+			</tr>		
 					<%
 				}%>
 		</table>
@@ -85,7 +91,7 @@
 	}
 				%>
 		
-		<!--let customers make flight reservations-->
+		
 
 		<!--enter waitling list if flight is full -- Popup?-->
 	<center>	

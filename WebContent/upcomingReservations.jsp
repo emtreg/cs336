@@ -26,11 +26,11 @@
 			Statement stmt = con.createStatement();
 			
 			//Get the selected radio button from the index.jsp
-			String entity = request.getParameter("command");
+			String user = request.getParameter("command");
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
 			String select = "SELECT * FROM Flights f ";
 			String join  = "JOIN Reservations r on (r.flight_num=f.flight_num) JOIN Tickets t using(user_id)";
-			String where = "WHERE r.user_id='" + entity+ "';";
+			String where = "WHERE r.user_id='" +user+ "';";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(select+join+where);
 			%>
@@ -50,7 +50,7 @@
 				//parse out the results
 				while (result.next()) {
 				%> 
-					<tr><td><%= result.getString("ticket_num")%></td>
+					<tr><td><%= result.getString("flight_num")%></td>
 						<td><%= result.getString("depart_airport_id")%></td>
 						<td><%= result.getString("arrival_airport_id")%></td>
 						<td><%= result.getString("depart_time")%></td>
@@ -59,10 +59,14 @@
 						<td><%= result.getString("aircraft_id")%></td>
 						<td><%= result.getString("airline_id")%></td>
 						
+						<td><form method="post" action="ticketInfo.jsp">
+							<button type="submit" name="ticket" data-value="<%=result.getString("flight_num")%>" value="<%=user%>">View Ticket Info</button> 
+						</form></td>
+						
 						<!--cancel flight reservations (if it is business or first class)-->
-						<form method="post" action="logout.jsp">
+						<td><form method="post">
 							<input type="submit" value="Cancel Reservation">
-						</form>
+						</form></td>
 					</tr>
 				<%
 				}
