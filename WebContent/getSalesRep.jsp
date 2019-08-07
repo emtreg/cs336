@@ -25,9 +25,14 @@
 			int month = request.getParameter("month");
 			int year= request.getParameter("year");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
+<<<<<<< HEAD
 			String monyear;
 			String monyear2;
+=======
+			String str = "select count(*) sales, sum(total_cost) total from (SELECT * total FROM Tickets WHERE  purchase_date>='"+year+":"+month+":00' and purchase_date<'";
+>>>>>>> refs/remotes/origin/master
 			if(month==12){
+<<<<<<< HEAD
 				monyear=year+"-"+month+"-01";
 				monyear2=(year+1)+"-01-01";
 			}else if(month==11||month==10){
@@ -36,6 +41,11 @@
 			}else if(month==9){
 				monyear=year+"-0"+(month)+"-01";
 				monyear2=year+"-10-01";
+=======
+				str=str+(year+1)+":01:01');";
+			}else{
+				str=str+year+":"+(month+1)+":01');";
+>>>>>>> refs/remotes/origin/master
 			}
 			else{
 				monyear=year+"-0"+(month)+"-01";

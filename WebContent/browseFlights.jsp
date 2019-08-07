@@ -35,6 +35,7 @@
 		String where= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+"';";
 		
 		ResultSet flights = stmt.executeQuery(select+join+where);
+		
 		%>	
 		<table frame="box" style="width:90%">
 				<tr><th><b>Flight #</b></th>
@@ -45,20 +46,36 @@
 					<th><b>Flight Type</b></th>
 					<th><b>Aircraft</b></th>
 					<th><b>Airline</b></th>
+					<%
+					if(trip.equals("RoundTrip")){
+						%>
+						<th><b>Return Flight#</b></th>
+						<th><b>Return Flight Date and Time</b></th>
+						<%
+					}
+				%>
 				</tr>
 				
 				<% 
-				while(flights.next()){
-					%>
-					<tr><td><%=flights.getString("flight_num") %></td>
-						<td><%=flights.getString("depart_airport_id")%></td>
-						<td><%=flights.getString("depart_time")%></td>
-						<td><%=flights.getString("arrival_airport_id")%></td>
-						<td><%=flights.getString("arrival_time") %></td>
-						<td><%=flights.getString("flight_type") %></td>
-						<td><%=flights.getString("aircraft_id") %></td>
-						<td><%=flights.getString("airline_id") %></td>
-					</tr>					
+		while(flights.next()){
+		%>
+			<tr><td><%=flights.getString("flight_num")%></td>
+				<td><%=flights.getString("depart_airport_id")%></td>
+				<td><%=flights.getString("depart_time")%></td>
+				<td><%=flights.getString("arrival_airport_id")%></td>
+				<td><%=flights.getString("arrival_time") %></td>
+				<td><%=flights.getString("flight_type") %></td>
+				<td><%=flights.getString("aircraft_id") %></td>
+				<td><%=flights.getString("airline_id") %></td>
+				<%
+					if(trip.equals("RoundTrip")){
+						%>
+						<td><%=flights.getString("return_flight")%></td>
+						
+						<%
+					}
+				%>
+			</tr>					
 					<%
 				}%>
 		</table>

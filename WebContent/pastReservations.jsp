@@ -11,6 +11,9 @@
 		border:1px solid black;
 		border-collapse: collapse;
 	}
+	td{
+		text-align: center;
+	}
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Past Reservations</title>
@@ -23,12 +26,8 @@
 			Connection con = db.getConnection();		
 			Statement stmt = con.createStatement();
 			
-			//Get the selected radio button from the index.jsp
-			String entity = request.getParameter("command");
-			out.print(entity);
-			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-			String str = "SELECT * FROM Reservations join Flights using (flight_num) where user_id='" + entity+ "';";  
-			//Run the query against the database.
+			String user = request.getParameter("command");
+			String str = "SELECT * FROM Reservations join Flights using (flight_num) where user_id='"+user+"';";  
 			ResultSet result = stmt.executeQuery(str); 
 			%>
 				
@@ -47,7 +46,7 @@
 				//parse out the results
 				while (result.next()) {
 				%> 
-					<tr><td><%= result.getString("ticket_num")%></td>
+					<tr><td><%= result.getString("flight_num")%></td>
 						<td><%= result.getString("depart_airport_id")%></td>
 						<td><%= result.getString("arrival_airport_id")%></td>
 						<td><%= result.getString("depart_time")%></td>
@@ -55,6 +54,10 @@
 						<td><%= result.getString("flight_type")%></td>
 						<td><%= result.getString("aircraft_id")%></td>
 						<td><%= result.getString("airline_id")%></td>
+						
+						<td><form method="post" action="ticketInfo.jsp">
+							<button type="submit" name="ticket" data-value="<%=result.getString("flight_num")%>" value="<%=user%>">View Ticket Info</button> 
+						</form></td>
 					</tr>
 				<%
 				}
