@@ -36,7 +36,8 @@
 		<option value="2012">2012</option>
 		<option value="2011">2011</option>
 		<option value="2010">2010</option>
-		</select>&nbsp;<br> <input type="submit" value="submit">
+		</select>
+		<input type="submit" value="Submit">
 	</form>
 	
 <br>

@@ -14,11 +14,11 @@
 	<input type="submit" value="Create or edit a Customer or Customer Representative account">
 	</form>
 <br>
-	<form method="post" action="salesRep.jsp">
+	<form method="post" action="salesRep.jsp"> <%//Done %>
 	<input type="submit" value="Obtain a sales report">
 	</form>
 <br>
-	<form method="post" action="reserv.jsp"> <%//List flight_num or name depending on infromation given %>
+	<form method="post" action="reserv.jsp"> <%//Done %>
 	<input type="submit" value="Obtain a list of reservations">
 	</form>
 <br>
@@ -26,7 +26,7 @@
 	<input type="submit" value="Obtain a summary of revenue">
 	</form>
 <br>
-	<form method="post" action="flightInfo.jsp">
+	<form method="post" action="flightInfo.jsp"><%//Testing out connection %>
 	<input type="submit" value="Obtain information about flights">
 	</form>
 </body>

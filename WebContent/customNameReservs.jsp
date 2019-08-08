@@ -19,9 +19,9 @@
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
-			String num = request.getParameter("flightNo");
+			String num = request.getParameter("user_id");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			String str = "SELECT * FROM Reservations WHERE flight_num='" +num+"';";
+			String str = "SELECT * FROM Reservations WHERE user_id='" +num+"';";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
 
@@ -58,10 +58,9 @@
 	}catch(Exception e){
 		out.print("There are no reservations under that name");
 	}
-
 			//close the connection.
 		%>
-			<form method="post" action="AdminPage.jsp">
+	<form method="post" action="AdminPage.jsp">
 	<input type="submit" value="Return to Homepage">
 	</form>
 </body>

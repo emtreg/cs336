@@ -2,16 +2,16 @@
     pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
-<!DOCTYPE html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
 </head>
 <body>
 
 <%
-		List<String> list = new ArrayList<String>();
 
 		try {
 
@@ -22,58 +22,58 @@
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
-			int month = request.getParameter("month");
-			int year= request.getParameter("year");
+			int m = Integer.parseInt(request.getParameter("month"));
+			int y= Integer.parseInt(request.getParameter("year"));
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-<<<<<<< HEAD
-			String monyear;
-			String monyear2;
-=======
-			String str = "select count(*) sales, sum(total_cost) total from (SELECT * total FROM Tickets WHERE  purchase_date>='"+year+":"+month+":00' and purchase_date<'";
->>>>>>> refs/remotes/origin/master
-			if(month==12){
-<<<<<<< HEAD
-				monyear=year+"-"+month+"-01";
-				monyear2=(year+1)+"-01-01";
-			}else if(month==11||month==10){
-				monyear=year+"-"+(month);
-				monyear2=year+"-"+(month+1);
-			}else if(month==9){
-				monyear=year+"-0"+(month)+"-01";
-				monyear2=year+"-10-01";
-=======
-				str=str+(year+1)+":01:01');";
-			}else{
-				str=str+year+":"+(month+1)+":01');";
->>>>>>> refs/remotes/origin/master
-			}
-			else{
-				monyear=year+"-0"+(month)+"-01";
-				monyear=year+"-0"+(month+1)+"-01";
-			}
-			String str="select count(*) sales, sum(total_cost) total from (select total_cost from Tickets where purchase_date between '"+year+"-"+month+"-01' and '"+monyear+"-01') t;";
+			String b;
+			String e;
+		if(m==12){
+			b="'"+y+"-12-01'";
+			e="'"+(y+1)+"-01-01'";
+		}else if(m==10||m==11){
+			b="'"+y+"-"+m+"-01'";
+			e="'"+y+"-"+(m+1)+"-01'";
+		}else if(m==9){
+			b="'"+y+"-09-01'";
+			e="'"+y+"-10-01'";
+		}else{
+			b="'"+y+"-0"+m+"-01'";
+			e="'"+y+"-0"+(m+1)+"-01'";
+		}
+			String str="select count(*) sales, sum(total_cost) total from (select total_cost from Tickets where purchase_date between "+b+" and "+e+") t;";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
-		if(result.getInt("sale")>0){
-			out.println("<b>A total of"+result.getInt("sales")+"tickets were sold. The total revenue from this month was $"+result.getFloat("total")+".</b>");
+			int s;
+		while(result.next()){
+			s=Integer.parseInt(result.getString("sales"));
+			if(s>0){
+			out.println("A total of "+s+" tickets were sold. The total revenue from this month was $"+result.getString("total")+".");
 		}else{
-			out.println("There were no sales on this date");
+			out.println("There were no sales in that month");
 		}
+		}
+		con.close();
+		stmt.close();
+		result.close();
 		%>
 	<br>
 	<br>
 	<form method="post" action="AdminPage.jsp">
 	<input type="submit" value="Return to Home">
 	</form>
+	
 	<%
 		} catch (Exception e) {
-			out.print("Error");
+			out.print(e);
+			%>
+			<br>
+			<br>
+			<form method="post" action="AdminPage.jsp">
+			<input type="submit" value="Return to Home">
+			</form>
+			
+			<%
 		}
 	%>
-<br>
-<br>
-			<form method="post" action="AdminPage.jsp">
-			<input type="submit" value="Return to the Admin Homepage">
-			</form>
 </body>
 </html>
