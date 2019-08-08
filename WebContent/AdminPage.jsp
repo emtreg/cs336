@@ -10,7 +10,7 @@
 <h1>What would you like to do?</h1>
 <br>
 <br>
-	<form method="post" action="editAccInfo.jsp"> <%//TBD %>
+	<form method="post" action="editAccInfo.jsp"> <%//TBD%>
 	<input type="submit" value="Create or edit a Customer or Customer Representative account">
 	</form>
 <br>
