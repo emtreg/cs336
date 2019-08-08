@@ -39,11 +39,8 @@
 		<table frame="box" style="width:100%">
 		<tr><th><b>Ticket #</b></th>
 			<th><b>Flight #</b></th>
-			<th><b>Departure Airport</b></th>
 			<th><b>Departure Time</b></th>
-			<th><b>Arrival Airport</b></th>
-			<th><b>Arrival Time</b></th>
-			<th><b>Airline</b></th>
+			<th><b>Booking Fee</b></th>
 			<th><b>Purchase Date</b></th>
 			<th><b>Purchase Time</b></th>
 			<th><b>Class</b></th>
@@ -56,18 +53,17 @@
 		//parse out the results
 		while (result.next()) {
 		%> 
-			<tr><td><%= result.getString("flight_num")%></td>
-				<td><%= result.getString("depart_airport_id")%></td>
-				<td><%= result.getString("arrival_airport_id")%></td>
+			<tr><td><%= result.getString("ticket_num")%></td>
+				<td><%= result.getString("flight_num")%></td>
 				<td><%= result.getString("depart_time")%></td>
-				<td><%= result.getString("arrival_time")%></td>
-				<td><%= result.getString("flight_type")%></td>
-				<td><%= result.getString("aircraft_id")%></td>
-				<td><%= result.getString("airline_id")%></td>
+				<td><%= result.getString("booking_fee")%></td>
+				<td><%= result.getString("purchase_date")%></td>
+				<td><%= result.getString("purchase_time")%></td>
+				<td><%= result.getString("class")%></td>
+				<td><%= result.getString("seat_num")%></td>
+				<td><%= result.getString("special_meal")%></td>
+				<td><%= result.getString("total_cost")%></td>
 				
-				<td><form method="post" action="ticketInfo.jsp">
-					<button type="submit" name="ticket" value="<%=user%>,<%=result.getString("flight_num")%>">View Ticket Info</button> 
-				</form></td>
 			</tr>
 		<%
 		}

@@ -112,21 +112,6 @@
 				<td><%=flights.getString("flight_type") %></td>
 				<td><%=flights.getString("aircraft_id") %></td>
 				<td><%=flights.getString("airline_id") %></td>
-				<%
-					if(trip.equals("RoundTrip")){
-						%>
-						<td><%=flights.getString("return_flight")%></td>	
-						<%
-						String q= "(SELECT r.return_flight FROM RoundTrip r JOIN Flights f using (flight_num)";
-						String qWhere =" WHERE f.flight_num='"+flights.getString("flight_num")+"');";
-						ResultSet returnDate = stmt.executeQuery("SELECT f.depart_time FROM Flights f WHERE f.flight_num="+q+qWhere);
-						
-						returnDate.next();
-						%>
-						<td><%=returnDate.getString("depart_time")%></td>	
-						<%
-					}
-				%>
 				<td><%=flights.getString("Price") %></td>
 				
 				<!--let customers make flight reservations-->
@@ -139,6 +124,7 @@
 		</table>
 	<%			
 		//close the connection.
+		stmt.close();
 		db.closeConnection(con);
 	}catch (Exception e) {
 		out.print(e);

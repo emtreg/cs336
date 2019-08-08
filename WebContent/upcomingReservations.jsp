@@ -52,8 +52,8 @@
 				%> 
 					<tr><td><%= result.getString("flight_num")%></td>
 						<td><%= result.getString("depart_airport_id")%></td>
-						<td><%= result.getString("arrival_airport_id")%></td>
 						<td><%= result.getString("depart_time")%></td>
+						<td><%= result.getString("arrival_airport_id")%></td>
 						<td><%= result.getString("arrival_time")%></td>
 						<td><%= result.getString("flight_type")%></td>
 						<td><%= result.getString("aircraft_id")%></td>
@@ -65,7 +65,7 @@
 						
 						<!--cancel flight reservations (if it is business or first class)-->
 						<td><form method="post" action="cancelRes.jsp">
-							<button type="submit" value="<%=user%>,<%=result.getString("flight_num")%>">Cancel Reservation</button>
+							<button type="submit" name="cancel" value="<%=user%>,<%=result.getString("flight_num")%>">Cancel Reservation</button>
 						</form></td>
 					</tr>
 				<%

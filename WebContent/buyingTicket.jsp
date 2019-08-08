@@ -48,12 +48,13 @@
 			<br>Seat (1-12)(A-F) (ex:7A)<br>
 				<input type="text" name="seat"/>
 			<br>
-			<br><input type="submit" value="Submit">
+			<br><input type="submit" value="Buy Ticket">
 			</form>
 		</center>
 		<%
 		
-		
+		//close the connection.
+		db.closeConnection(con);
 	}catch(Exception e){
 		out.print(e);
 	}%>

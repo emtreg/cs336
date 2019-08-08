@@ -16,13 +16,21 @@
 		Connection con = db.getConnection();		
 		Statement stmt = con.createStatement();
 		
-		//Get the selected radio button from the index.jsp
-		String user = request.getParameter("command");
-		//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-		String delete= "";
+		String userflight = request.getParameter("cancel");
+		int comma = userflight.indexOf(','); 
+		String user = userflight.substring(0,comma);
+		String flight= userflight.substring(comma+1);
+		
+		String checkClass= "SELECT class From Tickets WHERE user_id='"+user+"' and flight_num='"+flight+"';";
+		ResultSet rst= stmt.executeQuery(checkClass);
+		
+		while(rst.next()){
+			out.print(rst.getString("class"));
+		}
+		
+		String delete= "DELETE FROM `TravelDatabase`.`Tickets` WHERE ('user_id'= '"+user+"'and `flight_num` = '"+flight+"');";
 		//Run the query against the database.
 		ResultSet result = stmt.executeQuery(delete);
-		
 		
 		//close the connection.
 		db.closeConnection(con);
