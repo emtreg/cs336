@@ -6,10 +6,16 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Flight information</title>
 </head>
 <body>
-
+Type in the name of an airport to get a list of all its provided flights.
+	<form method="post" action="flightsByAirport.jsp">
+	<input type="text" name="airport">
+	<input type="submit" value="Submit">
+	</form>
+	<br>
+	<br>
 <%
 try{
 ApplicationDB db = new ApplicationDB();	
@@ -17,15 +23,46 @@ ApplicationDB db = new ApplicationDB();
 			
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
-			String str="select * from Tickets;";
+			String str="select flight_num, count(*) m from Flights join Tickets using(flight_num) group by flight_num order by m desc;";
 			ResultSet result = stmt.executeQuery(str);
-			while(result.next()){
-				out.println(result.getString("ticket_num"));
+			out.println("Currently,these are most active flights (in descending order): ");
+			out.print("<table border=\"1\">");
+			//make a row
+			out.print("<tr>");
+			//make a column
+			out.print("<td>");
+			//print out column header
+			out.print("Flight no.");
+			out.print("</td>");
+			//make a column
+			out.print("<td>");
+			out.print("Number of Tickets");
+			out.print("</td>");
+
+			//parse out the results
+			while (result.next()) {
+				//make a row
+				out.print("<tr>");
+				//make a column
+				out.print("<td>");
+				//Print out current bar name:
+				out.print(result.getString("flight_num"));
+				out.print("</td>");
+				out.print("<td>");
+				//Print out current beer name:
+				out.print(result.getString("m"));
+				out.print("</td>");
 			}
+			con.close();
 }catch (Exception e){
 out.print(e);
 }
 %>
+<br>
+<br>
+	<form method="post" action="AdminPage.jsp">
+	<input type="submit" value="Return to Homepage">
+	</form>
 
 </body>
 </html>
