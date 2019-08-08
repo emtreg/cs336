@@ -22,7 +22,7 @@
 	<input type="submit" value="Obtain a list of reservations">
 	</form>
 <br>
-	<form method="post" action="reservSum.jsp">
+	<form method="post" action="reservSum.jsp"><%//Done %>
 	<input type="submit" value="Obtain a summary of revenue">
 	</form>
 <br>
