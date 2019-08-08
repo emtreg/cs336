@@ -1,3 +1,4 @@
+<!-- Customer Code Done by Erika Cruz, Admin Redirect done by Serrina Li -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -39,6 +40,9 @@
 				</form>
 			</center>
 		
+			<br>
+			<br>
+			
 			<center><% //Search for flights (oneway, round-trip, flexible date/time)%>
 				<h2> Search for Flights </h2>
 				<form method="post" action="browseFlights.jsp">
@@ -87,12 +91,17 @@
 					<td>
 						<br><input type="radio" name="trip" value="OneWay"/>One-Way
 			 			<br><input type="radio" name="trip" value="RoundTrip"/>Round-Trip
-			  			<br>
+			  			<br><br>
 					</td>
 					<td>
-						<br>Flights within <input type=text name="flexibility"> days of <input type=text name="date">
+						<td>Date you wish to fly: </td><td><input type="text" name="date"></td> (YYYY-MM-DD)
+						<br>Find flights within +-3 Days?
+						<br><input type="radio" name="flex" value="' and t.diff<=3;"/>Yes
+			 			<br><input type="radio" name="flex" value="' and t.diff<=0;"/>No
+			  			<br>
+
 					</td>
-					<br><input type="submit" value="Search">
+					<br><button type="submit" name="submit" value="<%=id%>">Submit</button>
 				</form>	
 			</center>			
 		
@@ -120,7 +129,7 @@
 		con.close();
 		
 	} catch (Exception ex) {
-		out.print("ERROR: Username does not exist");
+		out.print("ERROR: Username or Password is not correct");
 	}
 	%>
 </body>

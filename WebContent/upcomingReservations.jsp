@@ -1,3 +1,4 @@
+<!-- Code Done by Erika Cruz -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -25,17 +26,16 @@
 			Connection con = db.getConnection();		
 			Statement stmt = con.createStatement();
 			
-			//Get the selected radio button from the index.jsp
 			String user = request.getParameter("command");
-			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-			String select = "SELECT * FROM Flights f ";
-			String join  = "JOIN Reservations r on (r.flight_num=f.flight_num) JOIN Tickets t using(user_id)";
-			String where = "WHERE r.user_id='" +user+ "';";
+			
+			String select = "SELECT * FROM Reservations";  
+			String join= " JOIN Flights using (flight_num)";
+			String where= " WHERE user_id='"+user+"' and DATE(NOW())<DATE(depart_time);";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(select+join+where);
 			%>
 				
-			<table frame="box" style="width:90%">
+			<table frame="box" style="width:100%">
 				<tr><th><b>Flight #</b></th>
 					<th><b>Departure Airport</b></th>
 					<th><b>Departure Time</b></th>
@@ -60,12 +60,12 @@
 						<td><%= result.getString("airline_id")%></td>
 						
 						<td><form method="post" action="ticketInfo.jsp">
-							<button type="submit" name="ticket" data-value="<%=result.getString("flight_num")%>" value="<%=user%>">View Ticket Info</button> 
+							<button type="submit" name="ticket" value="<%=user%>,<%=result.getString("flight_num")%>">View Ticket Info</button> 
 						</form></td>
 						
 						<!--cancel flight reservations (if it is business or first class)-->
-						<td><form method="post">
-							<input type="submit" value="Cancel Reservation">
+						<td><form method="post" action="cancelRes.jsp">
+							<button type="submit" value="<%=user%>,<%=result.getString("flight_num")%>">Cancel Reservation</button>
 						</form></td>
 					</tr>
 				<%

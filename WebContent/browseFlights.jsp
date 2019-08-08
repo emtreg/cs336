@@ -1,3 +1,4 @@
+<!-- Code Done by Erika Cruz -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -20,26 +21,67 @@
 </head> 
 <body>
 	<h3>Flights</h3>
+		<!--enter waitling list if flight is full -- Popup?-->
+	<center>	
+		<!--sort flights by diff criteria (price, take-off time, landing time)-->
+		<h3>Sort by</h3>
+		<form method="post" action="sellsNewBeer.jsp">
+		Price:
+			<input type="radio" name="sortprice" value="highlow"/>Highest to Lowest
+			<input type="radio" name="sortprice" value="lowhigh"/>Lowest to Highest
+		
+		<br>Depart Time:
+			<input type="radio" name="sortdepart" value="soonlater"/>Sooner to Later
+			<input type="radio" name="sortdepart" value="latersooner"/>Later to Sooner
+			
+		<br>OR
+		<br>Arrival Time:
+			<input type="radio" name="sortarrival" value="soonlater"/>Sooner to Later
+			<input type="radio" name="sortarrival" value="latersooner"/>Later to Sooner
+			
+		<br><input type="submit" value="Sort">
+		</form>
+
+		
+		<!--filter the list of flights by various criteria (price, nuber of stops, airline)-->
+		<h3>Filter</h3>
+		Price:
+		<form method="post" action="query.jsp">
+			<select name="price" size=1>
+				<option value="1.0">$100-300</option>
+				<option value="3.0">$300-500</option>
+				<option value="5.0">$500-800</option>
+				<option value="8.0">$800 and over</option>
+			</select>&nbsp;<br> <input type="submit" value="submit">
+		</form>
+		
+		Number of Stops:
+		
+		Airline:
+		
+	</center>
+	
 	<%try{
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();		
 		Statement stmt = con.createStatement(); 
 		
+		String user= request.getParameter("submit");
 		String depart= request.getParameter("depart");
 		String arrival= request.getParameter("arrival");
 		String trip= request.getParameter("trip");
-		String flex= request.getParameter("flexibility");
+		String flex= request.getParameter("flex");
 		String date= request.getParameter("date");		
 		
 		//Getting OneWay DB or RoundTrip DB
 		String select= "Select * from "+trip;
 		String join=" JOIN Flights f using (flight_num)";
-		String wherePort= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+"';";
+		String dquery= " JOIN (select abs(datediff('"+date+"',DATE(depart_time))) diff,flight_num from Flights) t using (flight_num)";
+		String wherePort= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+flex;
 		
-		ResultSet flights = stmt.executeQuery(select+join+wherePort);
-		
+		ResultSet flights = stmt.executeQuery(select+join+dquery+wherePort);
 		%>	
-		<table frame="box" style="width:90%">
+		<table frame="box" style="width:100%">
 				<tr><th><b>Flight #</b></th>
 					<th><b>Departure Airport</b></th>
 					<th><b>Departure Time</b></th>
@@ -56,6 +98,7 @@
 						<%
 					}
 				%>
+					<th><b>Price</b></th>
 				</tr>
 				
 				<% 
@@ -72,34 +115,34 @@
 				<%
 					if(trip.equals("RoundTrip")){
 						%>
-						<td><%=flights.getString("return_flight")%></td>
+						<td><%=flights.getString("return_flight")%></td>	
+						<%
+						String q= "(SELECT r.return_flight FROM RoundTrip r JOIN Flights f using (flight_num)";
+						String qWhere =" WHERE f.flight_num='"+flights.getString("flight_num")+"');";
+						ResultSet returnDate = stmt.executeQuery("SELECT f.depart_time FROM Flights f WHERE f.flight_num="+q+qWhere);
 						
+						returnDate.next();
+						%>
+						<td><%=returnDate.getString("depart_time")%></td>	
 						<%
 					}
 				%>
+				<td><%=flights.getString("Price") %></td>
+				
 				<!--let customers make flight reservations-->
-				<td><form method="post" action="ticketInfo.jsp">
-							<button type="submit" name="ticket" value="<%=flights.getString("flight_num")%>">Reserve Spot for Flight</button> 
+				<td><form method="post" action="reservingFlight.jsp">
+							<button type="submit" name="ticket" value="<%=user%>,<%=flights.getString("flight_num")%>">Reserve Spot for Flight</button> 
 					</form></td>
 			</tr>		
-					<%
-				}%>
+		<%
+		}%>
 		</table>
 	<%			
+		//close the connection.
+		db.closeConnection(con);
 	}catch (Exception e) {
 		out.print(e);
 	}
-				%>
-		
-		
-
-		<!--enter waitling list if flight is full -- Popup?-->
-	<center>	
-		<!--sort flights by diff criteria (price, take-off time, landing time)-->
-		<h3>Sort by</h3>
-		
-		<!--filter the list of flights by various criteria (price, nuber of stops, airline)-->
-		<h3>Filter</h3>
-	</center>
+	%>
 </body>
 </html>

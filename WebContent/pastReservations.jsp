@@ -1,3 +1,4 @@
+<!-- Code Done by Erika Cruz -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -27,11 +28,14 @@
 			Statement stmt = con.createStatement();
 			
 			String user = request.getParameter("command");
-			String str = "SELECT * FROM Reservations join Flights using (flight_num) where user_id='"+user+"';";  
-			ResultSet result = stmt.executeQuery(str); 
+			String select = "SELECT * FROM Reservations";  
+			String join= " JOIN Flights using (flight_num)";
+			String where= " WHERE user_id='"+user+"' and DATE(NOW())>DATE(depart_time);";
+			
+			ResultSet result = stmt.executeQuery(select+join+where); 
 			%>
 				
-			<table frame="box" style="width:90%">
+			<table frame="box" style="width:100%">
 				<tr><th><b>Flight #</b></th>
 					<th><b>Departure Airport</b></th>
 					<th><b>Departure Time</b></th>
@@ -56,7 +60,7 @@
 						<td><%= result.getString("airline_id")%></td>
 						
 						<td><form method="post" action="ticketInfo.jsp">
-							<button type="submit" name="ticket" data-value="<%=result.getString("flight_num")%>" value="<%=user%>">View Ticket Info</button> 
+							<button type="submit" name="ticket" value="<%=user%>,<%=result.getString("flight_num")%>">View Ticket Info</button> 
 						</form></td>
 					</tr>
 				<%
