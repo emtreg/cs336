@@ -62,7 +62,7 @@
 				<td><%= result.getString("class")%></td>
 				<td><%= result.getString("seat_num")%></td>
 				<td><%= result.getString("special_meal")%></td>
-				<td><%= result.getString("total_cost")%></td>
+				<td><%= result.getFloat("total_cost")%></td>
 				
 			</tr>
 		<%

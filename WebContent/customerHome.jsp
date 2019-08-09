@@ -45,6 +45,7 @@
 			
 			<center><% //Search for flights (oneway, round-trip, flexible date/time)%>
 				<h2> Search for Flights </h2>
+				
 				<form method="post" action="browseFlights.jsp">
 					<td>Departure Airport: <select name="depart">
 						<% 
@@ -68,6 +69,7 @@
 						%>
 					</select></td>	
 					-- Going To -->
+					
 					<td>Arrival Airport: <select name="arrival">
 						<%
 						try{
@@ -101,7 +103,47 @@
 			  			<br>
 
 					</td>
-					<br><button type="submit" name="submit" value="<%=id%>">Submit</button>
+					<td><!--filter the list of flights by various criteria (price, number of stops, airline)-->
+						<h3>Filter:</h3>
+						Price:
+						<select name="price" size=1>
+							<option>All Prices </option>
+							<option value="1.0">$100-300</option>
+							<option value="3.0">$300-500</option>
+							<option value="5.0">$500-800</option>
+							<option value="8.0">$800 and over</option>
+						</select>
+					</td>
+					<td>
+						<br>Number of Stops:
+							<br><input type="radio" name="stops" value="0"/>0
+			 				<br><input type="radio" name="stops" value="1"/>1
+			 				<br><input type="radio" name="stops" value="2+"/>2+
+					</td>
+					<td>
+						<br>Airline:
+						<%
+						try{
+							String q2="SELECT name, airport_id FROM Airport";
+							ResultSet portList2= stmt.executeQuery(q2);
+							
+							while(portList2.next()){
+								int i=1;
+								%>
+								<input type="checkbox" name="airline<%=i%>" value= "<%=portList2.getString("airline_id")%>"><%=portList2.getString("airline_id")%>
+								<%		
+								i++;
+							}
+							portList2.close();
+						}
+						catch(Exception e){
+							out.print(e.getMessage());
+						}
+						%>	
+					</td>
+					<td>
+						<br><button type="submit" name="submit" value="<%=id%>">Submit</button>
+					</td>
 				</form>	
 			</center>			
 		

@@ -21,50 +21,36 @@
 </head> 
 <body>
 	<h3>Flights</h3>
-		<!--enter waitling list if flight is full -- Popup?-->
+		<!--enter waitling list if flight is full Popup?-->
 	<center>	
 		<!--sort flights by diff criteria (price, take-off time, landing time)-->
-		<h3>Sort by</h3>
-		<form method="post" action="sellsNewBeer.jsp">
-		Price:
-			<input type="radio" name="sortprice" value="highlow"/>Highest to Lowest
-			<input type="radio" name="sortprice" value="lowhigh"/>Lowest to Highest
+		<h3>Sort by:</h3>
 		
-		<br>Depart Time:
-			<input type="radio" name="sortdepart" value="soonlater"/>Sooner to Later
-			<input type="radio" name="sortdepart" value="latersooner"/>Later to Sooner
+		<form method="post" action="sellsNewBeer.jsp">
+			Price:
+				<input type="radio" name="sortprice" value="highlow"/>Highest to Lowest
+				<input type="radio" name="sortprice" value="lowhigh"/>Lowest to Highest
 			
-		<br>OR
-		<br>Arrival Time:
-			<input type="radio" name="sortarrival" value="soonlater"/>Sooner to Later
-			<input type="radio" name="sortarrival" value="latersooner"/>Later to Sooner
-			
+			<br><br>Depart Time:
+				<input type="radio" name="sortdepart" value="soonlater"/>Sooner to Later
+				<input type="radio" name="sortdepart" value="latersooner"/>Later to Sooner
+				
+			<br>OR
+			<br>Arrival Time:
+				<input type="radio" name="sortarrival" value="soonlater"/>Sooner to Later
+				<input type="radio" name="sortarrival" value="latersooner"/>Later to Sooner
+				
 		<br><input type="submit" value="Sort">
 		</form>
-
-		
-		<!--filter the list of flights by various criteria (price, nuber of stops, airline)-->
-		<h3>Filter</h3>
-		Price:
-		<form method="post" action="query.jsp">
-			<select name="price" size=1>
-				<option value="1.0">$100-300</option>
-				<option value="3.0">$300-500</option>
-				<option value="5.0">$500-800</option>
-				<option value="8.0">$800 and over</option>
-			</select>&nbsp;<br> <input type="submit" value="submit">
-		</form>
-		
-		Number of Stops:
-		
-		Airline:
-		
 	</center>
 	
 	<%try{
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();		
 		Statement stmt = con.createStatement(); 
+		
+		String sortprice= request.getParameter("sortprice");
+		out.print(sortprice);
 		
 		String user= request.getParameter("submit");
 		String depart= request.getParameter("depart");
@@ -80,6 +66,7 @@
 		String wherePort= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+flex;
 		
 		ResultSet flights = stmt.executeQuery(select+join+dquery+wherePort);
+		
 		%>	
 		<table frame="box" style="width:100%">
 				<tr><th><b>Flight #</b></th>
@@ -90,14 +77,13 @@
 					<th><b>Flight Type</b></th>
 					<th><b>Aircraft</b></th>
 					<th><b>Airline</b></th>
-					<%
-					if(trip.equals("RoundTrip")){
-						%>
-						<th><b>Return Flight#</b></th>
-						<th><b>Return Flight Date and Time</b></th>
-						<%
+					
+					<% if(trip.equals("RoundTrip")){
+						out.print("<th><b>Return Flight#</b></th>");
+						out.print("<th><b>Return Flight Date and Time</b></th>");
 					}
-				%>
+					%>
+						
 					<th><b>Price</b></th>
 				</tr>
 				
@@ -112,11 +98,30 @@
 				<td><%=flights.getString("flight_type") %></td>
 				<td><%=flights.getString("aircraft_id") %></td>
 				<td><%=flights.getString("airline_id") %></td>
-				<td><%=flights.getString("Price") %></td>
+				
+				<%float price= flights.getFloat("Price");
+				String flight_num= flights.getString("flight_num");
+				
+				if(trip.equals("RoundTrip")){
+					String selectq= "SELECT f.flight_num, f.depart_time FROM Flights f WHERE f.flight_num=";
+					String q= "(SELECT r.return_flight FROM RoundTrip r JOIN Flights f using (flight_num)";
+					String qWhere =" WHERE f.flight_num='"+flights.getString("flight_num")+"');";
+					ResultSet returnDate = stmt.executeQuery(selectq+q+qWhere);
+						
+					returnDate.next();
+					String rFlight=returnDate.getString("flight_num");
+					String rDTime=returnDate.getString("depart_time");
+						
+					out.print("<td>"+rFlight+"</td>");
+					out.print("<td>"+rDTime+"</td>");
+				}
+				%>
+				
+				<td><%=price%></td>
 				
 				<!--let customers make flight reservations-->
 				<td><form method="post" action="reservingFlight.jsp">
-							<button type="submit" name="ticket" value="<%=user%>,<%=flights.getString("flight_num")%>">Reserve Spot for Flight</button> 
+							<button type="submit" name="ticket" value="<%=user%>,<%=flight_num%>">Reserve Spot for Flight</button> 
 					</form></td>
 			</tr>		
 		<%
