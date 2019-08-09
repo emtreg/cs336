@@ -19,9 +19,9 @@
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
-			String num = request.getParameter("user_id");
+			String num = request.getParameter("name");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			String str = "SELECT * FROM Reservations WHERE user_id='" +num+"';";
+			String str = "SELECT * FROM Reservations join user using (user_id) WHERE name='" +num+"';";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
 
@@ -32,7 +32,7 @@
 			//make a column
 			out.print("<td>");
 			//print out column header
-			out.print("User ID");
+			out.print("Name");
 			out.print("</td>");
 			//make a column
 			out.print("<td>");
@@ -46,7 +46,7 @@
 				//make a column
 				out.print("<td>");
 				//Print out current bar name:
-				out.print(result.getString("user_id"));
+				out.print(result.getString("name"));
 				out.print("</td>");
 				out.print("<td>");
 				//Print out current beer name:

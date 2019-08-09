@@ -17,9 +17,9 @@ Enter flight number here:
 </form>
 <br>
 <br>
-Or, enter the customer's user ID here:
+Or, enter the customer's name here:
 <form method="post" action="customNameReservs.jsp">
-<input type="text" name="user_id">
+<input type="text" name="name">
 <input type="submit" value="Enter">
 </form>
 </body>
