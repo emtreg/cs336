@@ -106,7 +106,7 @@
 					<!--sort flights by diff criteria (price, take-off time, landing time)-->
 					<h3>(Optional) Sort by:</h3>
 						<select name="sort" size=1>
-							<option value="null"></option>
+							<option value=null></option>
 							<option value="pricehighlow">Price: Highest to Lowest</option>
 							<option value="pricelowhigh">Price: Lowest to Highest</option>
 							<option value="DTsoonerlater">Departure Time: Sooner to Later</option>
@@ -118,7 +118,7 @@
 				<h3>(Optional) Filter:</h3>
 					Price:
 					<select name="price" size=1>
-						<option>All Prices </option>
+						<option value=null > </option>
 						<option value="300">Under $300</option>
 						<option value="500">Under $500</option>
 						<option value="800">Under $800</option>
@@ -129,7 +129,7 @@
 			 			<br><input type="radio" name="stops" value="1"/>1
 			 			<br><input type="radio" name="stops" value="2+"/>2+
 				
-					<br>Airline:
+					<br>Just this Airline:
 						<select name="airline">
 							<%
 							try{
@@ -137,7 +137,7 @@
 								ResultSet portList2= stmt.executeQuery(q2);
 								
 								%>
-								<option name="airline">All Airlines</option>
+								<option name="airline" value=null></option>
 								<%	
 								while(portList2.next()){
 									%>

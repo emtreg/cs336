@@ -39,6 +39,20 @@
 		int tcost=  rquery.getInt("price")+30;
 		int stops= rquery.getInt("depart_time");
 		
+		String getDate = "SELECT CURDATE()";
+		String getTime = "SELECT CURTIME()";
+		ResultSet result2 = stmt.executeQuery(getDate);
+		String purchaseDate="";
+		String purchaseTime="";
+		
+		result2.next();
+		purchaseDate = result2.getString("CURDATE()");
+		
+		result2= stmt.executeQuery(getTime);	
+		result2.next();
+		purchaseTime = result2.getString("CURTIME()");
+
+		
 		String insertTicket = "INSERT INTO Tickets(ticket_num, user_id, flight_num, booking_fee, class, seat_num, special_meal, total_cost, depart_time, purchase_date, purchase_time, stops)"
 							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(insertTicket);
@@ -52,8 +66,8 @@
 		ps.setString(7,meal);
 		ps.setInt(8,tcost);
 		ps.setString(9,dtime );
-		ps.setString(10, "DATE(NOW())");
-		ps.setString(11, "CURRENT_TIMESTAMP()");
+		ps.setString(10, purchaseDate);
+		ps.setString(11, purchaseTime);
 		ps.setInt(12, stops);
 		ps.executeUpdate();
 

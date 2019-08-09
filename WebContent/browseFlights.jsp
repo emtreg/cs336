@@ -35,7 +35,6 @@
 		String flex= request.getParameter("flex");
 		String date= request.getParameter("date");	
 		
-		out.print("hiuj");
 		//Getting OneWay DB or RoundTrip DB
 		String select= "Select * from "+trip;
 		String join=" JOIN Flights f using (flight_num)";
@@ -44,34 +43,58 @@
 				
 		//Sort Choices
 		String sort= request.getParameter("sort");
-		String order;
-		if(sort==null){
-			order=";";				
+		String orderBy=";";
+		if(sort.equals("ATlatersooner")){
+			orderBy=" ORDER BY arrival_time DESC;";			
 		}else if(sort.equals("pricehighlow")){
-			order=" ORDER BY price DESC;";
+			orderBy=" ORDER BY price DESC;";
 		}else if(sort.equals("pricelowhigh")){
-			order=" ORDER BY price ASC;";
+			orderBy=" ORDER BY price ASC;";
 		}else if(sort.equals("DTsoonerlater")){
-			order=" ORDER BY depart_time ASC;";
+			orderBy=" ORDER BY depart_time ASC;";
 		}else if(sort.equals("DTlatersooner")){
-			order=" ORDER BY depart_time DESC;";
+			orderBy=" ORDER BY depart_time DESC;";
 		}else if(sort.equals("ATsoonerlater")){
-			order=" ORDER BY arrival_time ASC;";
+			orderBy=" ORDER BY arrival_time ASC;";
 		}else{
-			order=" ORDER BY arrival_time DESC;";
+			orderBy=";";
 		}
 		
 		//Filter Choices
 		String price= request.getParameter("price"); //Under 300,500, or 800
 		String numStops= request.getParameter("stops"); //0,1,2+
-		//String airlines= request.getParameter("sortarrival");	
+		String airline= request.getParameter("airline");	
+		String filter;
 		
+		if(price.equals("300")||price.equals("500")||price.equals("800")){
+			filter=" and f.price<="+price;
+		}else{
+			filter="";
+		}
+		
+		if(numStops==null){
+			filter= filter+"";
+		}
+		else if(numStops.equals("2+")){
+			filter=filter+" and f.stops>=2";
+		}
+		else{
+			filter=filter+" and f.stops="+numStops;
+		}
+		
+		if(airline.equals("null")){
+			filter=filter+"";
+		}
+		else{
+			filter=filter+" and f.airline_id='"+airline+"'";			
+		}
 		
 		//To get rid of Flights the User is already reserved to
 		String q= " and f.flight_num not in (SELECT flight_num FROM Reservations WHERE user_id='"+user+"')";
-		String wherePort= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+flex+q+order;
+		String wherePort= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+flex+filter+q;
 		
-		ResultSet flights = stmt.executeQuery(select+join+dquery+wherePort);
+		//out.print(select+join+dquery+wherePort+orderBy);
+		ResultSet flights = stmt.executeQuery(select+join+dquery+wherePort+orderBy);
 		
 		%>	
 		<table frame="box" style="width:100%">
@@ -115,6 +138,7 @@
 					String q2= "(SELECT r.return_flight FROM RoundTrip r JOIN Flights f using (flight_num)";
 					String qWhere =" WHERE f.flight_num='"+flights.getString("flight_num")+"');";
 					ResultSet returnDate = stmt.executeQuery(selectq+q2+qWhere);
+					//out.print(selectq+q2+qWhere);
 						
 					returnDate.next();
 						String rFlight=returnDate.getString("flight_num");
