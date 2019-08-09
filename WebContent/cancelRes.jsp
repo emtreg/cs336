@@ -30,8 +30,13 @@
 		
 		String delete= "DELETE FROM `TravelDatabase`.`Tickets` WHERE ('user_id'= '"+user+"'and `flight_num` = '"+flight+"');";
 		//Run the query against the database.
-		ResultSet result = stmt.executeQuery(delete);
-		
+		stmt.executeUpdate(delete);
+		out.print("Ticket was Cancelled");
+		%>
+		<form method="post" action="customerHome.jsp">
+				<br><br><input type="submit" value="<%=user%>"> Go back to Upcoming Reservations
+		</form>
+		<%
 		//close the connection.
 		db.closeConnection(con);
 	}catch(Exception e){
