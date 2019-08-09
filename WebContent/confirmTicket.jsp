@@ -28,7 +28,7 @@
 		String seat= request.getParameter("seat");
 		
 		Random r = new Random();
-	    String ticket_num = String.format("%04d", r.nextInt(1001));
+	    String ticket_num = String.format("%05d", r.nextInt(1001));
 	    System.out.println(ticket_num);
 		int booking= 30;
 		

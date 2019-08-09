@@ -26,7 +26,7 @@
 		
 		rst.next();
 		String tickClass= rst.getString("class");
-		out.print(tickClass);
+		//out.print(tickClass);
 		
 		if((tickClass.equals("First"))||(tickClass.equals("Business"))){
 			//delete ticket form Tickets DB
