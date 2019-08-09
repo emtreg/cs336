@@ -6,6 +6,8 @@ Serrina Lee:addCustRep.jsp, AdminPage.jsp, customerRevenue.jsp, customNameReserv
 	emNewName.jsp, emNewPass.jsp, flightNoReservs.jsp, flightNumRevenue.jsp, getSalesRep.jsp, newEmail.jsp, NewName.jsp, newPass.jsp, reserv.jsp,
 	reservSum.jsp, salesRep.jsp
 
+Emily Tregelles: employeeHome.jsp, addAircraft.jsp, addAirport.jsp, addFlight.jsp, addReservation.jsp, deleteAirport.jsp, deleteAircraft.jsp, deleteFlight.jsp, deleteReservation.jsp, displayTable.jsp, editAirport.jsp, editAircraft.jsp, editFlight.jsp, editReservation.jsp, employeeLogin.jsp, showReservations.jsp, showWaitlist.jsp
+
 Admin Login:
 User: Admin
 Password: Admin

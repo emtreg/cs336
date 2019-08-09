@@ -54,10 +54,26 @@
 			//Run the query against the database.
 
 		} catch (Exception e) {
-			out.print(e);
-			out.print("Error");
+			//out.print(e);
+			
+%>
+	
+Error: Unable to update field.
+<br>
+<br>
+* If updating flight number, make sure that it is not a duplicate
+<br>
+* If updating airline ID, ensure that it is a valid ID
+<br>
+* If updating departure or arrival date/time, ensure that you are using the correct format (YYYY-MM-DD HH:MM:SS)
+<br>
+* If updating aircraft ID, ensure that is is a valid ID
+<br>
+* If updating airline ID or aircraft ID, make sure that the airline is associated with the correct aircraft and vice versa
+ 	
+<% 
 		}
-	%>
+%>
 
 </body>
 </html>

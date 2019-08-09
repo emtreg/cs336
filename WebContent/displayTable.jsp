@@ -35,6 +35,9 @@ try {
 	//depending on the radio button selection make a table with the appropriate columns 
 	if (entity.equals("Airport")) {
 		
+		out.print("<h2>");
+		out.print("Airports:");
+		out.print("</h2>");	
 		out.print("<table>");
 		out.print("<tr>");
 		out.print("<td>");
@@ -183,7 +186,10 @@ Edit airport information:
 <%
 				
 	} else if (entity.equals("Aircraft")) {
-				
+		
+		out.print("<h2>");
+		out.print("Aircrafts:");
+		out.print("</h2>");
 		out.print("<table>");
 		out.print("<tr>");
 		out.print("<td>");
@@ -382,7 +388,10 @@ Edit aircraft information:
 <%
 				
 	} else if (entity.equals("Flights")) {
-				
+		
+		out.print("<h2>");
+		out.print("Flights:");
+		out.print("</h2>");
 		out.print("<table>");
 		out.print("<tr>");
 		out.print("<td>");
@@ -553,11 +562,11 @@ Add new flight:
 			<td><input type="text" name="arrival_airport_id"></td>
 		</tr>
 		<tr>
-			<td>Departure Date/Time (YYYY:MM:DD HH:MM:SS): </td>
+			<td>Departure Date/Time (YYYY-MM-DD HH:MM:SS): </td>
 			<td><input type="text" name="depart_time"></td>
 		</tr>
 		<tr>
-			<td>Arrival Date/Time (YYYY:MM:DD HH:MM:SS): </td>
+			<td>Arrival Date/Time  (YYYY-MM-DD HH:MM:SS): </td>
 			<td><input type="text" name="arrival_time"></td>
 		</tr>
 		<tr>
