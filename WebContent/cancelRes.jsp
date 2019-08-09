@@ -24,17 +24,36 @@
 		String checkClass= "SELECT class From Tickets WHERE user_id='"+user+"' and flight_num='"+flight+"';";
 		ResultSet rst= stmt.executeQuery(checkClass);
 		
-		while(rst.next()){
-			out.print(rst.getString("class"));
-		}
+		rst.next();
+		String tickClass= rst.getString("class");
 		
-		String delete= "DELETE FROM `TravelDatabase`.`Tickets` WHERE ('user_id'= '"+user+"'and `flight_num` = '"+flight+"');";
-		//Run the query against the database.
-		stmt.executeUpdate(delete);
-		out.print("Ticket was Cancelled");
-		%>
-		<form method="post" action="customerHome.jsp">
-				<br><br><input type="submit" value="<%=user%>"> Go back to Upcoming Reservations
+		if(tickClass.equals("Economy")){
+			out.print("You cannot cancel an Economy class ticket");
+		}
+		else{
+			//delete ticket form Tickets DB
+			String deleteTix= "DELETE FROM Tickets"+" WHERE 'user_id'= '?' and `flight_num` = '?';";
+			PreparedStatement ps = con.prepareStatement(deleteTix);
+			ps.setString(1, user);
+			ps.setString(2, flight);
+			ps.executeUpdate();
+			out.print("tic");
+			
+			//delete reservation from Reservations DB
+			String deleteRes= "DELETE FROM Reservations WHERE 'user_id'= '?' and `flight_num` = '?';";
+			ps = con.prepareStatement(deleteRes);
+			ps.setString(1, user);
+			ps.setString(2, flight);
+			ps.executeUpdate();
+			out.print("deleteRes");
+			
+			con.close();
+    		out.print("Your Ticket and Reservation are Now Cancelled");
+		}        		
+        		
+		
+		%><form method="post" action="upcomingReservations.jsp">
+				<br><br><button type="submit" name="command" value="<%=user%>"> Go back to Upcoming Reservations </button>
 		</form>
 		<%
 		//close the connection.
