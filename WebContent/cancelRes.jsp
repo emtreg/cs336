@@ -27,28 +27,22 @@
 		rst.next();
 		String tickClass= rst.getString("class");
 		
-		if(tickClass.equals("Economy")){
-			out.print("You cannot cancel an Economy class ticket");
-		}
-		else{
+		if(!tickClass.equals("Economy")){
 			//delete ticket form Tickets DB
-			String deleteTix= "DELETE FROM Tickets"+" WHERE 'user_id'= '?' and `flight_num` = '?';";
-			PreparedStatement ps = con.prepareStatement(deleteTix);
-			ps.setString(1, user);
-			ps.setString(2, flight);
+			String deleteTix= "DELETE FROM Tickets WHERE user_id= '"+user+"' and flight_num = '"+flight+"';";
+			PreparedStatement ps= con.prepareStatement(deleteTix);
 			ps.executeUpdate();
-			out.print("tic");
 			
 			//delete reservation from Reservations DB
-			String deleteRes= "DELETE FROM Reservations WHERE 'user_id'= '?' and `flight_num` = '?';";
-			ps = con.prepareStatement(deleteRes);
-			ps.setString(1, user);
-			ps.setString(2, flight);
+			String deleteRes= "DELETE FROM Reservations WHERE user_id= '"+user+"' and flight_num = '"+flight+"';";
+			ps= con.prepareStatement(deleteRes);
 			ps.executeUpdate();
-			out.print("deleteRes");
 			
 			con.close();
     		out.print("Your Ticket and Reservation are Now Cancelled");
+		}
+		else{
+			out.print("You cannot cancel an Economy class ticket");
 		}        		
         		
 		
