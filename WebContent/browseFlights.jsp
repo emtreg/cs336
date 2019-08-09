@@ -21,28 +21,6 @@
 </head> 
 <body>
 	<h3>Flights</h3>
-		<!--enter waitling list if flight is full Popup?-->
-	<center>	
-		<!--sort flights by diff criteria (price, take-off time, landing time)-->
-		<h3>Sort by:</h3>
-		
-		<form method="post" action="sellsNewBeer.jsp">
-			Price:
-				<input type="radio" name="sortprice" value="highlow"/>Highest to Lowest
-				<input type="radio" name="sortprice" value="lowhigh"/>Lowest to Highest
-			
-			<br><br>Depart Time:
-				<input type="radio" name="sortdepart" value="soonlater"/>Sooner to Later
-				<input type="radio" name="sortdepart" value="latersooner"/>Later to Sooner
-				
-			<br>OR
-			<br>Arrival Time:
-				<input type="radio" name="sortarrival" value="soonlater"/>Sooner to Later
-				<input type="radio" name="sortarrival" value="latersooner"/>Later to Sooner
-				
-		<br><input type="submit" value="Sort">
-		</form>
-	</center>
 	
 	<%try{
 		ApplicationDB db = new ApplicationDB();	
@@ -50,7 +28,6 @@
 		Statement stmt = con.createStatement(); 
 		
 		String sortprice= request.getParameter("sortprice");
-		out.print(sortprice);
 		
 		String user= request.getParameter("submit");
 		String depart= request.getParameter("depart");
@@ -62,8 +39,12 @@
 		//Getting OneWay DB or RoundTrip DB
 		String select= "Select * from "+trip;
 		String join=" JOIN Flights f using (flight_num)";
+		String resJOIN= " JOIN Reservations r (flight_num)";
 		String dquery= " JOIN (select abs(datediff('"+date+"',DATE(depart_time))) diff,flight_num from Flights) t using (flight_num)";
-		String wherePort= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+flex;
+		
+		//To get rid of Flights the User is already reserved to
+		String q= " and f.flight_num not in (SELECT flight_num FROM Reservations WHERE user_id='"+user+"');";
+		String wherePort= " WHERE f.depart_airport_id= '"+depart+"' and f.arrival_airport_id='"+arrival+flex+q;
 		
 		ResultSet flights = stmt.executeQuery(select+join+dquery+wherePort);
 		
@@ -77,6 +58,7 @@
 					<th><b>Flight Type</b></th>
 					<th><b>Aircraft</b></th>
 					<th><b>Airline</b></th>
+					<th><b>Stops</b></th>
 					
 					<% if(trip.equals("RoundTrip")){
 						out.print("<th><b>Return Flight#</b></th>");
@@ -98,38 +80,44 @@
 				<td><%=flights.getString("flight_type") %></td>
 				<td><%=flights.getString("aircraft_id") %></td>
 				<td><%=flights.getString("airline_id") %></td>
+				<td><%=flights.getString("stops") %></td>
 				
 				<%float price= flights.getFloat("Price");
 				String flight_num= flights.getString("flight_num");
 				
 				if(trip.equals("RoundTrip")){
 					String selectq= "SELECT f.flight_num, f.depart_time FROM Flights f WHERE f.flight_num=";
-					String q= "(SELECT r.return_flight FROM RoundTrip r JOIN Flights f using (flight_num)";
+					String q2= "(SELECT r.return_flight FROM RoundTrip r JOIN Flights f using (flight_num)";
 					String qWhere =" WHERE f.flight_num='"+flights.getString("flight_num")+"');";
-					ResultSet returnDate = stmt.executeQuery(selectq+q+qWhere);
+					ResultSet returnDate = stmt.executeQuery(selectq+q2+qWhere);
 						
-					returnDate.next();
-					String rFlight=returnDate.getString("flight_num");
-					String rDTime=returnDate.getString("depart_time");
+					while(returnDate.next()){
+						String rFlight=returnDate.getString("flight_num");
+						String rDTime=returnDate.getString("depart_time");
 						
-					out.print("<td>"+rFlight+"</td>");
-					out.print("<td>"+rDTime+"</td>");
+						out.print("<td>"+rFlight+"</td>");
+						out.print("<td>"+rDTime+"</td>");
+					}
 				}
 				%>
 				
 				<td><%=price%></td>
 				
 				<!--let customers make flight reservations-->
-				<td><form method="post" action="reservingFlight.jsp">
+				<td><form method="post" action="reserveSpot.jsp">
 							<button type="submit" name="ticket" value="<%=user%>,<%=flight_num%>">Reserve Spot for Flight</button> 
 					</form></td>
 			</tr>		
 		<%
 		}%>
 		</table>
+		
+		<br><br><form method="post" action="logout.jsp">
+				<br><br><input type="submit" value="Logout">
+			</form>
+		
 	<%			
 		//close the connection.
-		stmt.close();
 		db.closeConnection(con);
 	}catch (Exception e) {
 		out.print(e);

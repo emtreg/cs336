@@ -67,6 +67,10 @@
 				}
 				%>
 			</table>
+			
+			<br><br><form method="post" action="logout.jsp">
+				<br><br><input type="submit" value="Logout">
+			</form>
 			<%
 			//close the connection.
 			db.closeConnection(con);

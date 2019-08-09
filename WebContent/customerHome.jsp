@@ -98,54 +98,81 @@
 					<td>
 						<td>Date you wish to fly: </td><td><input type="text" name="date"></td> (YYYY-MM-DD)
 						<br>Find flights within +-3 Days?
-						<br><input type="radio" name="flex" value="' and t.diff<=3;"/>Yes
-			 			<br><input type="radio" name="flex" value="' and t.diff<=0;"/>No
+						<br><input type="radio" name="flex" value="' and t.diff<=3"/>Yes
+			 			<br><input type="radio" name="flex" value="' and t.diff<=0"/>No
 			  			<br>
 
-					</td>
-					<td><!--filter the list of flights by various criteria (price, number of stops, airline)-->
-						<h3>Filter:</h3>
-						Price:
-						<select name="price" size=1>
-							<option>All Prices </option>
-							<option value="1.0">$100-300</option>
-							<option value="3.0">$300-500</option>
-							<option value="5.0">$500-800</option>
-							<option value="8.0">$800 and over</option>
-						</select>
-					</td>
-					<td>
-						<br>Number of Stops:
-							<br><input type="radio" name="stops" value="0"/>0
-			 				<br><input type="radio" name="stops" value="1"/>1
-			 				<br><input type="radio" name="stops" value="2+"/>2+
-					</td>
-					<td>
-						<br>Airline:
-						<%
-						try{
-							String q2="SELECT name, airport_id FROM Airport";
-							ResultSet portList2= stmt.executeQuery(q2);
-							
-							while(portList2.next()){
-								int i=1;
-								%>
-								<input type="checkbox" name="airline<%=i%>" value= "<%=portList2.getString("airline_id")%>"><%=portList2.getString("airline_id")%>
-								<%		
-								i++;
-							}
-							portList2.close();
-						}
-						catch(Exception e){
-							out.print(e.getMessage());
-						}
-						%>	
-					</td>
-					<td>
 						<br><button type="submit" name="submit" value="<%=id%>">Submit</button>
 					</td>
 				</form>	
 			</center>			
+		
+			<center>	
+			<!--sort flights by diff criteria (price, take-off time, landing time)-->
+			<h3>Sort by:</h3>
+		
+			<form method="post" action="sellsNewBeer.jsp">
+				Price:
+					<input type="radio" name="sortprice" value="highlow"/>Highest to Lowest
+					<input type="radio" name="sortprice" value="lowhigh"/>Lowest to Highest
+				
+				<br><br>Depart Time:
+					<input type="radio" name="sortdepart" value="soonlater"/>Sooner to Later
+					<input type="radio" name="sortdepart" value="latersooner"/>Later to Sooner
+					
+				<br>OR
+				<br>Arrival Time:
+					<input type="radio" name="sortarrival" value="soonlater"/>Sooner to Later
+					<input type="radio" name="sortarrival" value="latersooner"/>Later to Sooner
+					
+				<br><input type="submit" value="Sort" onClick="refreshPage()"s>
+			</form>
+		
+			<h3>Filter:</h3>
+				Price:
+				<select name="price" size=1>
+					<option>All Prices </option>
+					<option value="1.0">$100-300</option>
+					<option value="3.0">$300-500</option>
+					<option value="5.0">$500-800</option>
+					<option value="8.0">$800 and over</option>
+				</select>
+				
+				<br>Number of Stops:
+					<br><input type="radio" name="stops" value="0"/>0
+			 		<br><input type="radio" name="stops" value="1"/>1
+			 		<br><input type="radio" name="stops" value="2+"/>2+
+				
+				<br>Airline:
+					<%
+					try{
+						String q2="SELECT name, airline_id FROM Airline";
+						ResultSet portList2= stmt.executeQuery(q2);
+							
+						while(portList2.next()){
+							int i=1;
+							%>
+							<input type="checkbox" name="airline<%=i%>" value= "<%=portList2.getString("airline_id")%>"><%=portList2.getString("name")%>(<%=portList2.getString("airline_id")%>)
+							<br>
+							<%		
+							i++;
+						}
+						portList2.close();
+					}
+					catch(Exception e){
+						out.print(e.getMessage());
+					}
+					%>	
+					<br><input type="submit" value="Filter">
+					
+					<button type="button" onClick="refreshPage()">Close</button>
+
+<script>
+function refreshPage(){
+    window.location.reload();
+} 
+</script>
+		</center>
 		
 			<form method="post" action="logout.jsp">
 				<br><br><input type="submit" value="Logout">
