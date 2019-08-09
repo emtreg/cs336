@@ -161,7 +161,6 @@
 	<form method="post" action="AdminPage.jsp">
 		<input type="submit" value="Return to Homepage">
 	</form>
-	
 
 </body>
 </html>
