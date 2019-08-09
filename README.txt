@@ -1,4 +1,4 @@
-URL:
+URL:http://ec2-18-218-34-21.us-east-2.compute.amazonaws.com:8080/TravelWebsite/index.jsp
 
 Code Credit:
 Erika Cruz: customerHome.jsp, pastReservations.jsp, upcomingReservations.jsp, browseFLight.jsp, reserveSpot.jsp, cancelRes.jsp, confirmTicket.jsp, ticketInfo.jsp,
