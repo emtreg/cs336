@@ -43,7 +43,7 @@
 			//String insert= "INSERT INTO Tickets(flight)"
 			%>
 			<center>	
-				<!--Input Ticket Info-->
+				<!--Input Ticket Info--> 
 				<form method="post" action="confirmTicket.jsp">
 				<b>Special Meal Order (Choose One):</b><br>
 					<input type="radio" name="meal" value="bread"/>Bread
@@ -61,16 +61,23 @@
 				<br><b>Seat (1-12)(A-F) (ex:7A): </b><br>
 					<input type="text" name="seat"/>
 				<br>
-				<br><button type="submit" name="submit" value="<%=user%>">Buy Ticket</button>
+				<br><button type="submit" name="submit" value="<%=user%>,<%=flight%>">Buy Ticket</button>
 				</form>
 			</center>
 			<%
 		}
 		else{
-			out.print("This Flight is full. Would you like to be added onto the waiting list?");
-			%>
+			String addToWaitlist = "INSERT INTO Waitlist(flight_num, user_id, position)" + "VALUES (?, ?, ?)";
 			
-			<%
+			PreparedStatement ps3 = con.prepareStatement(addToWaitlist);
+			
+			ps3.setString(1, flight);
+			ps3.setString(2, user);
+			ps3.setString(3, "1");
+			
+			ps3.executeUpdate();
+			
+			out.print("This flight is full. The customer has been added to the waiting list.");
 		}
 		
 		//close the connection.

@@ -102,77 +102,60 @@
 			 			<br><input type="radio" name="flex" value="' and t.diff<=0"/>No
 			  			<br>
 
-						<br><button type="submit" name="submit" value="<%=id%>">Submit</button>
 					</td>
+					<!--sort flights by diff criteria (price, take-off time, landing time)-->
+					<h3>(Optional) Sort by:</h3>
+						<select name="sort" size=1>
+							<option value="null"></option>
+							<option value="pricehighlow">Price: Highest to Lowest</option>
+							<option value="pricelowhigh">Price: Lowest to Highest</option>
+							<option value="DTsoonerlater">Departure Time: Sooner to Later</option>
+							<option value="DTlatersooner">Departure Time: Later to Sooner</option>
+							<option value="ATsoonerlater">Arrival Time: Sooner to Later</option>
+							<option value="ATlatersooner">Arrival Time: Later to Sooner</option>
+						</select>
+			
+				<h3>(Optional) Filter:</h3>
+					Price:
+					<select name="price" size=1>
+						<option>All Prices </option>
+						<option value="300">Under $300</option>
+						<option value="500">Under $500</option>
+						<option value="800">Under $800</option>
+					</select>
+				
+					<br>Number of Stops:
+						<br><input type="radio" name="stops" value="0"/>0
+			 			<br><input type="radio" name="stops" value="1"/>1
+			 			<br><input type="radio" name="stops" value="2+"/>2+
+				
+					<br>Airline:
+						<select name="airline">
+							<%
+							try{
+								String q2="SELECT name, airline_id FROM Airline";
+								ResultSet portList2= stmt.executeQuery(q2);
+								
+								%>
+								<option name="airline">All Airlines</option>
+								<%	
+								while(portList2.next()){
+									%>
+									<option name="airline" value= "<%=portList2.getString("airline_id")%>">
+									<%=portList2.getString("name")%> (<%=portList2.getString("airline_id")%>)
+									</option>
+									<%				
+								}
+								portList2.close();
+							}
+							catch(Exception e){
+								out.print(e.getMessage());
+							}
+							%>		
+						</select>
+					<br><button type="submit" name="submit" value="<%=id%>">Submit</button>
 				</form>	
 			</center>			
-		
-			<center>	
-			<!--sort flights by diff criteria (price, take-off time, landing time)-->
-			<h3>Sort by:</h3>
-		
-			<form method="post" action="sellsNewBeer.jsp">
-				Price:
-					<input type="radio" name="sortprice" value="highlow"/>Highest to Lowest
-					<input type="radio" name="sortprice" value="lowhigh"/>Lowest to Highest
-				
-				<br><br>Depart Time:
-					<input type="radio" name="sortdepart" value="soonlater"/>Sooner to Later
-					<input type="radio" name="sortdepart" value="latersooner"/>Later to Sooner
-					
-				<br>OR
-				<br>Arrival Time:
-					<input type="radio" name="sortarrival" value="soonlater"/>Sooner to Later
-					<input type="radio" name="sortarrival" value="latersooner"/>Later to Sooner
-					
-				<br><input type="submit" value="Sort" onClick="refreshPage()"s>
-			</form>
-		
-			<h3>Filter:</h3>
-				Price:
-				<select name="price" size=1>
-					<option>All Prices </option>
-					<option value="1.0">$100-300</option>
-					<option value="3.0">$300-500</option>
-					<option value="5.0">$500-800</option>
-					<option value="8.0">$800 and over</option>
-				</select>
-				
-				<br>Number of Stops:
-					<br><input type="radio" name="stops" value="0"/>0
-			 		<br><input type="radio" name="stops" value="1"/>1
-			 		<br><input type="radio" name="stops" value="2+"/>2+
-				
-				<br>Airline:
-					<%
-					try{
-						String q2="SELECT name, airline_id FROM Airline";
-						ResultSet portList2= stmt.executeQuery(q2);
-							
-						while(portList2.next()){
-							int i=1;
-							%>
-							<input type="checkbox" name="airline<%=i%>" value= "<%=portList2.getString("airline_id")%>"><%=portList2.getString("name")%>(<%=portList2.getString("airline_id")%>)
-							<br>
-							<%		
-							i++;
-						}
-						portList2.close();
-					}
-					catch(Exception e){
-						out.print(e.getMessage());
-					}
-					%>	
-					<br><input type="submit" value="Filter">
-					
-					<button type="button" onClick="refreshPage()">Close</button>
-
-<script>
-function refreshPage(){
-    window.location.reload();
-} 
-</script>
-		</center>
 		
 			<form method="post" action="logout.jsp">
 				<br><br><input type="submit" value="Logout">

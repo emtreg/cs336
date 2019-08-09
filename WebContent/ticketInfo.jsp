@@ -27,7 +27,7 @@
 		Statement stmt = con.createStatement();
 		
 		String userflight = request.getParameter("ticket");
-		int comma = userflight.indexOf(','); 
+		int comma = userflight.indexOf(',');  
 		
 		String user = userflight.substring(0,comma);
 		String flight= userflight.substring(comma+1);

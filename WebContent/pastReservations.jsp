@@ -49,7 +49,7 @@
 				<%
 				//parse out the results
 				while (result.next()) {
-				%> 
+				%>  
 					<tr><td><%= result.getString("flight_num")%></td>
 						<td><%= result.getString("depart_airport_id")%></td>
 						<td><%= result.getString("arrival_airport_id")%></td>
