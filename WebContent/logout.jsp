@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Logout</title>
 </head>
 <body>
 	<% out.println("You have successfully logged out"); %>

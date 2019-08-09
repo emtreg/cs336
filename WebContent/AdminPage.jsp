@@ -7,27 +7,30 @@
 <title>Welcome, Administrator!</title>
 </head>
 <body>
-<h1>What would you like to do?</h1>
+<h2>What would you like to do?</h2>
 <br>
-<br>
-	<form method="post" action="editAccInfo.jsp"> <%//TBD %>
+	<form method="post" action="editAccInfo.jsp">
 	<input type="submit" value="Create or edit a Customer or Customer Representative account">
 	</form>
 <br>
-	<form method="post" action="salesRep.jsp"> <%//Done %>
+	<form method="post" action="salesRep.jsp">
 	<input type="submit" value="Obtain a sales report">
 	</form>
 <br>
-	<form method="post" action="reserv.jsp"> <%//Done %>
+	<form method="post" action="reserv.jsp">
 	<input type="submit" value="Obtain a list of reservations">
 	</form>
 <br>
-	<form method="post" action="reservSum.jsp"><%//Done %>
+	<form method="post" action="reservSum.jsp">
 	<input type="submit" value="Obtain a summary of revenue">
 	</form>
 <br>
-	<form method="post" action="flightInfo.jsp"><%//Done x2 %>
+	<form method="post" action="flightInfo.jsp">
 	<input type="submit" value="Obtain information about flights">
+	</form>
+<br>
+	<form method="post" action="logout.jsp">
+	<input type="submit" value="Logout">
 	</form>
 </body>
 </html>

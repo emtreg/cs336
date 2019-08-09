@@ -9,6 +9,12 @@
 <title>Flight information</title>
 </head>
 <body>
+	<form method="post" action="AdminPage.jsp">
+	<input type="submit" value="Return to Homepage">
+	</form>
+	<br>
+	<br>
+
 Type in the name of an airport to get a list of all its provided flights.
 	<form method="post" action="flightsByAirport.jsp">
 	<input type="text" name="airport">
@@ -58,11 +64,6 @@ ApplicationDB db = new ApplicationDB();
 out.print(e);
 }
 %>
-<br>
-<br>
-	<form method="post" action="AdminPage.jsp">
-	<input type="submit" value="Return to Homepage">
-	</form>
 
 </body>
 </html>

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title></title>
 </head>
 <body>
 <%
@@ -25,14 +25,46 @@
 			ResultSet result = stmt.executeQuery(str);
 			//parse out the results
 			while(result.next()) {
-			out.print("The customer who generated the most revenue was "+result.getString("id")+" with a total of $"+result.getString("total"));
+			out.println("The customer who generated the most revenue was "+result.getString("id")+" with a total of $"+result.getString("total")+".");
 			}
 			con.close();
 	}catch(Exception e){
 		out.print(e);
 	}
+
 			//close the connection.
 		%>
+		<br>
+		<br>
+		Get a summary of generated revenue by filling out one of the boxes below:
+	<br>
+	<form method="post" action="flightNumRevenue.jsp">
+	<table>
+	<tr>    
+	<td>Flight No.:</td><td><input type="text" name="flight_num"></td>
+	</table>
+	<input type="submit" value="Enter">
+	</form>
+	<br>
+	<br>
+		<form method="post" action="airlineRevenue.jsp">
+	<table>
+	<tr>    
+	<td>Airline ID:</td><td><input type="text" name="airline_id"></td>
+	</table>
+	<input type="submit" value="Enter">
+	</form>
+	<br>
+	<br>
+			<form method="post" action="customerRevenue.jsp">
+	<table>
+	<tr>    
+	<td>Customer ID:</td><td><input type="text" name="customer_id"></td>
+	</table>
+	<input type="submit" value="Enter">
+	</form>
+	<br>
+	<br>
 		<br>
 	<form method="post" action="AdminPage.jsp">
 	<input type="submit" value="Return to Homepage">
