@@ -11,7 +11,7 @@
 <title>Confirm Ticket</title>
 </head>
 <body>
-	<%
+	<% 
 	try{
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();		
@@ -25,7 +25,7 @@
 		
 		String meal= request.getParameter("meal");
 		String classType= request.getParameter("class");
-		String seat= request.getParameter("trip");
+		String seat= request.getParameter("seat");
 		
 		Random r = new Random();
 	    String ticket_num = String.format("%04d", r.nextInt(1001));

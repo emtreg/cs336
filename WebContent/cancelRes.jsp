@@ -11,7 +11,7 @@
 </head>
 <body>
 	<%
-	try{
+	try{ 
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();		
 		Statement stmt = con.createStatement();
@@ -26,8 +26,9 @@
 		
 		rst.next();
 		String tickClass= rst.getString("class");
+		out.print(tickClass);
 		
-		if(!tickClass.equals("Economy")){
+		if((tickClass.equals("First"))||(tickClass.equals("Business"))){
 			//delete ticket form Tickets DB
 			String deleteTix= "DELETE FROM Tickets WHERE user_id= '"+user+"' and flight_num = '"+flight+"';";
 			PreparedStatement ps= con.prepareStatement(deleteTix);
@@ -51,6 +52,7 @@
 		</form>
 		<%
 		//close the connection.
+		con.close();
 		db.closeConnection(con);
 	}catch(Exception e){
 		out.print(e);

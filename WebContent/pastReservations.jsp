@@ -11,7 +11,7 @@
 	table, th, td{
 		border:1px solid black;
 		border-collapse: collapse;
-	}
+	} 
 	td{
 		text-align: center;
 	}
@@ -20,7 +20,7 @@
 <title>Past Reservations</title>
 </head>
 <body>
-	<h1>Past Reservations</h1>
+	<h1>Past Reservations</h1> 
 	<%
 		try {
 			ApplicationDB db = new ApplicationDB();	
@@ -73,6 +73,7 @@
 			</form>
 			<%
 			//close the connection.
+			con.close();
 			db.closeConnection(con);
 		} catch (Exception e) {
 			out.print(e);

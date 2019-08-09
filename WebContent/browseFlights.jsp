@@ -76,7 +76,7 @@
 		if(numStops.equals("0")||numStops.equals("1")){
 			filter=filter+" and f.stops="+numStops;
 		}
-		else if(numStops.equals("2+")){
+		else if(numStops.equals("2+")){ 
 			filter=filter+" and f.stops>=2";
 		}
 		else{
@@ -164,6 +164,8 @@
 		
 	<%			
 		//close the connection.
+		con.close();
+		con2.close();
 		db.closeConnection(con);
 	    db.closeConnection(con2);
 	}catch (Exception e) {

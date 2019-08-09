@@ -11,7 +11,7 @@
 		border:1px solid black;
 		border-collapse: collapse;
 	}
-	td{
+	td{ 
 		text-align: center;
 	}
 </style>
@@ -74,6 +74,7 @@
 			</form>
 		<%
 		//close the connection.
+		con.close();
 		db.closeConnection(con);
 	}catch(Exception e){
 		out.println(e);

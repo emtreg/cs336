@@ -39,23 +39,23 @@
 		q2.next();
 		int numTix = q2.getInt("c");
 		
-		if(available!=numTix){
+		if(available!=numTix){ 
 			//String insert= "INSERT INTO Tickets(flight)"
 			%>
 			<center>	
 				<!--Input Ticket Info--> 
 				<form method="post" action="confirmTicket.jsp">
 				<b>Special Meal Order (Choose One):</b><br>
-					<input type="radio" name="meal" value="bread"/>Bread
-					<input type="radio" name="meal" value="steak"/>Steak
-					<input type="radio" name="meal" value="chicken"/>Chicken
-					<input type="radio" name="meal" value="salad"/>Salad
+					<input type="radio" name="meal" value="Bread"/>Bread 
+					<input type="radio" name="meal" value="Steak"/>Steak
+					<input type="radio" name="meal" value="Chicken"/>Chicken
+					<input type="radio" name="meal" value="Salad"/>Salad
 				<br>
 				
 				<br><b>Class:</b><br>
-					<input type="radio" name="class" value="economy"/>Economy
-					<input type="radio" name="class" value="business"/>Business
-					<input type="radio" name="class" value="first"/>First
+					<input type="radio" name="class" value="Economy"/>Economy
+					<input type="radio" name="class" value="Business"/>Business
+					<input type="radio" name="class" value="First"/>First
 				<br>
 					
 				<br><b>Seat (1-12)(A-F) (ex:7A): </b><br>
