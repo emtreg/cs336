@@ -1,7 +1,8 @@
 URL:
 
 Code Credit:
-Erika Cruz: customerHome.jsp, pastReservations.jsp, upcomingReservations.jsp, browseFLight.jsp, reservingFlight.jsp, cancelRes.jsp
+Erika Cruz: customerHome.jsp, pastReservations.jsp, upcomingReservations.jsp, browseFLight.jsp, reserveSpot.jsp, cancelRes.jsp, confirmTicket.jsp, ticketInfo.jsp,
+			
 
 Serrina Lee:addCustRep.jsp, AdminPage.jsp, customerRevenue.jsp, customNameReservs.jsp, deleteEmployee.jsp, deleteUser.jsp, editAccInfo.jsp, 
 	emNewName.jsp, emNewPass.jsp, flightNoReservs.jsp, flightNumRevenue.jsp, getSalesRep.jsp, newEmail.jsp, NewName.jsp, newPass.jsp, reserv.jsp,
