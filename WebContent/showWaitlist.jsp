@@ -22,49 +22,34 @@ try {
 	String flight_num = request.getParameter("flight_num");
 	
 	//Make a SELECT query from the Waitlist table where flight_num matches the flight_num that was entered
-	String str = "SELECT * FROM Waitlist WHERE flight_num = '" + flight_num + "'";
+	String str1 = "SELECT * FROM Flights WHERE flight_num = '" + flight_num + "'";
+	String str2 = "SELECT * FROM Waitlist WHERE flight_num = '" + flight_num + "'";
 	
 	//Run the query against the database.
 	//if the flight number does not match any from db then do ERROR
-	ResultSet result = stmt.executeQuery(str);
+	ResultSet result = null, qrs = null;
+	result = stmt.executeQuery(str1);
 	
-	//Make an HTML table to show the results in:
-	out.print("<b>");
-	out.print("Waiting list for flight " + flight_num + ": ");
-	out.print("</b>");
-	out.print("<br>");
-	out.print("<br>");
-	out.print("<table>");
-	
-	//make a row
-	out.print("<tr>");
-	//make a column
-	out.print("<td>");
-	//print out column header
-	out.print("<b>");
-	out.print("Customer ID");
-	out.print("</b>");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("<b>");
-	out.print("Position");
-	out.print("</b>");
-	out.print("</td>");
-	out.print("</tr>");
-	
-	//parse out the results
-	while (result.next()) {
+	if(result.next()) {
+		
+		qrs = stmt.executeQuery(str2);
+		
+		//Make an HTML table to show the results in:
+		out.print("<b>");
+		out.print("Waiting list for flight " + flight_num + ": ");
+		out.print("</b>");
+		out.print("<br>");
+		out.print("<br>");
+		out.print("<table>");
+		
 		//make a row
 		out.print("<tr>");
+		//make a column
 		out.print("<td>");
-		//Print out current waiting list
-		out.print(result.getString("user_id"));
+		//print out column header
+		out.print("<b>");
+		out.print("Customer ID");
+		out.print("</b>");
 		out.print("</td>");
 		out.print("<td>");
 		out.print("</td>");
@@ -73,17 +58,44 @@ try {
 		out.print("<td>");
 		out.print("</td>");
 		out.print("<td>");
-		out.print(result.getString("position"));
+		out.print("<b>");
+		out.print("Position");
+		out.print("</b>");
 		out.print("</td>");
 		out.print("</tr>");
-}
+		
+		//parse out the results
+		while (qrs.next()) {
+			//make a row
+			out.print("<tr>");
+			out.print("<td>");
+			//Print out current waiting list
+			out.print(qrs.getString("user_id"));
+			out.print("</td>");
+			out.print("<td>");
+			out.print("</td>");
+			out.print("<td>");
+			out.print("</td>");
+			out.print("<td>");
+			out.print("</td>");
+			out.print("<td>");
+			out.print(qrs.getString("position"));
+			out.print("</td>");
+			out.print("</tr>");
+		}
 
-	out.print("</table>");
-
+		out.print("</table>");
+		
+	} else {
+		
+		out.print("Invalid flight number.");
+	}
+	
 	//close the connection.
 	db.closeConnection(con);
 	
 } catch (Exception e) {
+	out.print("Unable to retrieve waitlist");
 	out.print(e);
 }
 

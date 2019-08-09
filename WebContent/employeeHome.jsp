@@ -36,20 +36,6 @@
 	%>
 <br>
 <br>
-Make flight reservation on behalf of customer:
-<br>
-<br>
-<form method="post" action="reserveFlight.jsp">
-		<table>
-			<tr>
-				<td>Customer ID: </td>
-				<td><input type="text" name="customer_id"></td>
-			</tr>
-		</table>
-		<br>
-		<input type="submit" value="Submit">
-	</form>
-<br>
 Access and edit customer reservations:
 <br>
 <br>

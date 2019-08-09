@@ -21,9 +21,9 @@
 		Statement stmt = con.createStatement();
 	
 		//Get parameters from the HTML form at the HelloWorld.jsp
-		String id = request.getParameter("airport_id");
+		String flight_num = request.getParameter("flight_num");
 		
-		String str = "SELECT * FROM Airport WHERE airport_id = '" + id + "'";
+		String str = "SELECT * FROM Flights WHERE flight_num = '" + flight_num + "'";
 		
 		//Run the query against the database.
 		//if user does not match any from db then do ERROR
@@ -32,7 +32,7 @@
 		if(result.next()) {
 		
 			//Make a delete statement for the Sells table:
-			String delete = "DELETE FROM Airport WHERE airport_id = '" + id +  "'";
+			String delete = "DELETE FROM Flights WHERE flight_num = '" + flight_num +  "'";
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(delete);
 	
@@ -48,11 +48,11 @@
 			//String username = request.getParameter("user_id");
 			//String password = request.getParameter("password");
 	
-			out.print("Airport Deleted");
+			out.print("Flight Deleted");
 		
 		} else {
 			
-			out.print("Airport ID does not exist.");
+			out.print("Flight number does not exist.");
 		}
 		
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
@@ -61,7 +61,7 @@
 		
 	} catch (Exception ex) {
 		//out.print(ex);
-		out.print("Airport ID does not exist");
+		out.print("Flight number does not exist");
 	}
 %>
 </body>
