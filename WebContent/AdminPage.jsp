@@ -22,11 +22,11 @@
 	<input type="submit" value="Obtain a list of reservations">
 	</form>
 <br>
-	<form method="post" action="reservSum.jsp">
+	<form method="post" action="reservSum.jsp"><%//Done %>
 	<input type="submit" value="Obtain a summary of revenue">
 	</form>
 <br>
-	<form method="post" action="flightInfo.jsp"><%//Testing out connection %>
+	<form method="post" action="flightInfo.jsp"><%//Done x2 %>
 	<input type="submit" value="Obtain information about flights">
 	</form>
 </body>
