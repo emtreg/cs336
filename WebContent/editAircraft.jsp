@@ -12,19 +12,20 @@
 <body>
 	<%
 		List<String> list = new ArrayList<String>();
+		ApplicationDB db = new ApplicationDB();	
+		Connection con = db.getConnection();	
+		
+		//Create a SQL statement
+		Statement stmt = con.createStatement();
+		//Get the combobox from the index.jsp
+		String aircraft_id = request.getParameter("aircraft_id");
+		String field = request.getParameter("field");
+		String new_value = request.getParameter("new_value");
 
 		try {
 
 			//Get the database connection
-			ApplicationDB db = new ApplicationDB();	
-			Connection con = db.getConnection();	
 			
-			//Create a SQL statement
-			Statement stmt = con.createStatement();
-			//Get the combobox from the index.jsp
-			String aircraft_id = request.getParameter("aircraft_id");
-			String field = request.getParameter("field");
-			String new_value = request.getParameter("new_value");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			String str = "SELECT * from Aircraft WHERE aircraft_id = '" + aircraft_id + "'";
 			String update = "UPDATE Aircraft SET " + field + " = '" + new_value + "' WHERE aircraft_id = '" + aircraft_id + "'";
@@ -49,13 +50,7 @@
 					out.print("Aircraft Updated");
 			//Run the query against the database.
 			
-				} else {
-					
-					if(field == "airline_id") {
-						
-						out.print("Invalid airline ID.");			
-					}
-				}
+				} 
 			
 			} else {
 				
@@ -66,8 +61,18 @@
 			con.close();
 
 		} catch (Exception e) {
-			out.print(e);
-			out.print("Error");
+			//out.print(e);
+			//out.print("Error");
+				
+			if(field.equals("airline_id")) {
+				
+				out.print("Invalid airline ID.");	
+				
+			} else {
+				
+				out.print("Error: Unable to update aircraft information.");
+			}
+			
 		}
 	%>
 

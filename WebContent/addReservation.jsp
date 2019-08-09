@@ -23,65 +23,108 @@
 
 		//Get parameters from the HTML form at the HelloWorld.jsp
 		String flight_num = request.getParameter("flight_num");
-		String ticket_num = request.getParameter("ticket_num");
+		//String ticket_num = request.getParameter("ticket_num");
 		String class_type = request.getParameter("class");
 		String seat_num = request.getParameter("seat_num");
 		String special_meal = request.getParameter("special_meal");
-		String booking_fee = request.getParameter("booking_fee");
-		String total_cost = request.getParameter("total_cost");
+		float booking_fee = 30;
+		//String cost = request.getParameter("total_cost");
 		String customer_id = (String)session.getAttribute("customer");
 		
-		
-		//Make an insert statement for the Sells table:
-			
 		String getFlightInfo = "SELECT * FROM Flights WHERE flight_num = '" + flight_num + "'";
+		String getNumTickets = "SELECT count(*) as numTickets from Tickets WHERE flight_num = '" + flight_num + "'";
+		String getLastPosition = "SELECT MAX(position) as maxPosition FROM Waitlist WHERE flight_num = '" + flight_num + "'";
 		String getSeats = "SELECT * FROM Aircraft A JOIN Flights F using(aircraft_id) WHERE F.flight_num = '" + flight_num + "'";
 		String checkSeatNum = "SELECT * FROM Tickets WHERE flight_num = '" + flight_num + "' and seat_num = '" + seat_num + "'";
+		String getTicketNums = "SELECT * FROM Tickets";
 		String getDate = "SELECT CURDATE()";
 		String getTime = "SELECT CURTIME()";
 		
-		ResultSet result = null, result2 = null, result3 = null, result4 = null, result5 = null;
+		int ticket_num = 10000 + new Random().nextInt(90000);
 		
-		result5 = stmt.executeQuery(checkSeatNum);
+		ResultSet result = null, result2 = null, result3 = null, result4 = null, result5 = null, result6 = null, result7 = null, result8 = null;
 		
-		if(result5.next()) {
+		result7 = stmt.executeQuery(getTicketNums);
+		
+		while(result7.next()) {
 			
-			out.print("Seat number is unavailable");
+			if(ticket_num == Integer.parseInt(result7.getString("ticket_num"))) {
+				
+				ticket_num = 10000 + new Random().nextInt(90000);
+				
+			}
+		}
+
+		result6 = stmt.executeQuery(getLastPosition);
+		
+		int position = 0;
+
+		if(result6.next()) {
+			
+			position = result6.getInt("maxPosition");
+		}
+		
+		result8 = stmt.executeQuery(getNumTickets);
+		
+		int numTickets = 0;
+		
+		if(result8.next()) {
+			
+			numTickets = result8.getInt("numTickets");
+			
+		}
+			
+		result4 = stmt.executeQuery(getSeats);
+		
+		int totalSeats = 0;
+		
+		if(result4.next()) {
+			
+			totalSeats = Integer.parseInt(result4.getString("available_seat")); 
+			
+		}
+			
+		if((totalSeats - numTickets) == 0) {
+				
+			String addToWaitlist = "INSERT INTO Waitlist(flight_num, user_id, position)" + "VALUES (?, ?, ?)";
+			
+			PreparedStatement ps3 = con.prepareStatement(addToWaitlist);
+			
+			ps3.setString(1, flight_num);
+			ps3.setString(2, customer_id);
+			ps3.setInt(3, position + 1);
+			
+			ps3.executeUpdate();
+			
+			out.print("This flight is full. The customer has been added to the waiting list.");
 			
 		} else {
-		
-			result4 = stmt.executeQuery(getSeats);
 			
-			if(result4.next()) {
+				result5 = stmt.executeQuery(checkSeatNum);
 				
-				int available_seats = result4.getInt("available_seat");
-				
-				if(available_seats == 0) {
+				if(result5.next()) {
 					
-					String addToWaitlist = "INSERT INTO Waitlist(flight_num, user_id, position)" + "VALUES (?, ?, ?)";
+					out.print("Seat number is unavailable");
 					
-					PreparedStatement ps3 = con.prepareStatement(addToWaitlist);
-					
-					ps3.setString(1, flight_num);
-					ps3.setString(2, customer_id);
-					ps3.setString(3, "1");
-					
-					ps3.executeUpdate();
-					
-					out.print("This flight is full. The customer has been added to the waiting list.");
-					
-					
-				} else {
-					
+				} 
+
 					result = stmt.executeQuery(getFlightInfo);
 					
 					String depart_time = "";
 					String stops = "";
+					String price = "";
+					
+					float cost = 0;
+					float total_cost = 0;
 					
 					if(result.next()) {
 						
 						 depart_time = result.getString("depart_time");
 						 stops = result.getString("stops");
+						 price = result.getString("Price");
+						 
+						cost = Integer.parseInt(price);	
+						total_cost = booking_fee + cost;
 					}
 					
 					result2 = stmt.executeQuery(getDate);
@@ -109,14 +152,14 @@
 					PreparedStatement ps2 = con.prepareStatement(insertTicket);
 					
 					//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-					ps2.setString(1, ticket_num);
+					ps2.setString(1, String.valueOf(ticket_num));
 					ps2.setString(2, customer_id);
 					ps2.setString(3, flight_num);
-					ps2.setString(4, booking_fee);
+					ps2.setFloat(4, booking_fee);
 					ps2.setString(5, class_type);
 					ps2.setString(6, seat_num);
 					ps2.setString(7, special_meal);
-					ps2.setString(8, total_cost);
+					ps2.setFloat(8, total_cost);
 					ps2.setString(9, depart_time);
 					ps2.setString(10, purchase_date);
 					ps2.setString(11, purchase_time);
@@ -141,9 +184,7 @@
 					//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 	
 					out.print("Reservation Added");
-						
-				}		
-			}	
+										
 		}
 			
 			con.close();

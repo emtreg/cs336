@@ -244,10 +244,6 @@ try {
 				<td><input type="text" name="flight_num"></td>
 			</tr>
 			<tr>
-				<td>Ticket number </td>
-				<td><input type="text" name="ticket_num"></td>
-			</tr>
-			<tr>
 				<td>Class </td>
 				<td><input type="text" name="class"></td>
 			</tr>
@@ -258,14 +254,6 @@ try {
 			<tr>
 				<td>Special Meal </td>
 				<td><input type="text" name="special_meal"></td>
-			</tr>
-			<tr>
-				<td>Booking Fee </td>
-				<td><input type="text" name="booking_fee"></td>
-			</tr>
-			<tr>
-				<td>Total cost </td>
-				<td><input type="text" name="total_cost"></td>
 			</tr>
 		</table>
 		<br>
@@ -312,10 +300,7 @@ try {
 				<!--  <option value="purchase_time">Purchase Time</option> -->
 				<option value="class">Class</option>
 				<option value="seat_num">Seat Number</option>
-				<option value="special meal">Special Meal</option>
-				<option value="stops">Stops</option>
-				<option value="booking_fee">Booking Fee</option>
-				<option value="total_cost">Total Cost</option>
+				<option value="special_meal">Special Meal</option>
 		</select>&nbsp;
 		<br>
 		<br> 

@@ -23,7 +23,7 @@ try {
 	
 	//Make a SELECT query from the Waitlist table where flight_num matches the flight_num that was entered
 	String str1 = "SELECT * FROM Flights WHERE flight_num = '" + flight_num + "'";
-	String str2 = "SELECT * FROM Waitlist WHERE flight_num = '" + flight_num + "'";
+	String str2 = "SELECT * FROM Waitlist WHERE flight_num = '" + flight_num + "' ORDER BY position ASC";
 	
 	//Run the query against the database.
 	//if the flight number does not match any from db then do ERROR
