@@ -26,7 +26,8 @@
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();		
 		Statement stmt = con.createStatement(); 
-		
+		Connection con2 = db.getConnection();	
+		Statement stmt2 = con.createStatement(); 
 		//Flight Choices
 		String user= request.getParameter("submit");
 		String depart= request.getParameter("depart");
@@ -66,20 +67,20 @@
 		String airline= request.getParameter("airline");	
 		String filter;
 		
-		if(price.equals("300")||price.equals("500")||price.equals("800")){
+		if(price.equals("300")||price.equals("500")||price.equals("1000")){
 			filter=" and f.price<="+price;
 		}else{
 			filter="";
 		}
 		
-		if(numStops==null){
-			filter= filter+"";
+		if(numStops.equals("0")||numStops.equals("1")){
+			filter=filter+" and f.stops="+numStops;
 		}
 		else if(numStops.equals("2+")){
 			filter=filter+" and f.stops>=2";
 		}
 		else{
-			filter=filter+" and f.stops="+numStops;
+			filter= filter+"";
 		}
 		
 		if(airline.equals("null")){
@@ -137,7 +138,7 @@
 					String selectq= "SELECT f.flight_num, f.depart_time FROM Flights f WHERE f.flight_num=";
 					String q2= "(SELECT r.return_flight FROM RoundTrip r JOIN Flights f using (flight_num)";
 					String qWhere =" WHERE f.flight_num='"+flights.getString("flight_num")+"');";
-					ResultSet returnDate = stmt.executeQuery(selectq+q2+qWhere);
+					ResultSet returnDate = stmt2.executeQuery(selectq+q2+qWhere);
 					//out.print(selectq+q2+qWhere);
 						
 					returnDate.next();
@@ -164,6 +165,7 @@
 	<%			
 		//close the connection.
 		db.closeConnection(con);
+	    db.closeConnection(con2);
 	}catch (Exception e) {
 		out.print(e);
 	}

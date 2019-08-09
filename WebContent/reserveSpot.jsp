@@ -69,13 +69,13 @@
 		else{
 			String addToWaitlist = "INSERT INTO Waitlist(flight_num, user_id, position)" + "VALUES (?, ?, ?)";
 			
-			PreparedStatement ps3 = con.prepareStatement(addToWaitlist);
+			PreparedStatement ps = con.prepareStatement(addToWaitlist);
 			
-			ps3.setString(1, flight);
-			ps3.setString(2, user);
-			ps3.setString(3, "1");
+			ps.setString(1, flight);
+			ps.setString(2, user);
+			ps.setString(3, "1");
 			
-			ps3.executeUpdate();
+			ps.executeUpdate();
 			
 			out.print("This flight is full. The customer has been added to the waiting list.");
 		}

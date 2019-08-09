@@ -121,13 +121,16 @@
 						<option value=null > </option>
 						<option value="300">Under $300</option>
 						<option value="500">Under $500</option>
-						<option value="800">Under $800</option>
+						<option value="1000">Under $1000</option>
 					</select>
 				
 					<br>Number of Stops:
-						<br><input type="radio" name="stops" value="0"/>0
-			 			<br><input type="radio" name="stops" value="1"/>1
-			 			<br><input type="radio" name="stops" value="2+"/>2+
+						<select name="stops" size=1>
+						<option value=null > </option>
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="2+">2+</option>
+					</select>
 				
 					<br>Just this Airline:
 						<select name="airline">
