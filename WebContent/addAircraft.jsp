@@ -22,23 +22,27 @@
 	
 
 		//Get parameters from the HTML form at the HelloWorld.jsp
-		String id = request.getParameter("airport_id");
-		String name = request.getParameter("airport_name");
-		String city = request.getParameter("city");
-		String country = request.getParameter("country");
+		String aircraft_id = request.getParameter("aircraft_id");
+		String airline_id = request.getParameter("airline_id");
+		String name = request.getParameter("name");
+		String num_seats = request.getParameter("num_seats");
+		//String economy_seats = request.getParameter("economy_seats");
+		//String first_seats = request.getParameter("first_seats");
 
 
 		//Make an insert statement for the Sells table:
-		String insert = "INSERT INTO Airport(airport_id, name, city, country)"
-				+ "VALUES (?, ?, ?, ?)";
+		String insert = "INSERT INTO Aircraft(aircraft_id, airline_id, name, available_seat)"
+			+ "VALUES (?, ?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 
 		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-		ps.setString(1, id);
-		ps.setString(2, name);
-		ps.setString(3, city);
-		ps.setString(4, country);
+		ps.setString(1, aircraft_id);
+		ps.setString(2, airline_id);
+		ps.setString(3, name);
+		ps.setString(4, num_seats);
+		//ps.setString(5, economy_seats);
+		//ps.setString(6, first_seats);
 		//Run the query against the DB
 		ps.executeUpdate();
 
@@ -49,12 +53,25 @@
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
 
-		out.print("Airport Added");
+		out.print("Aircraft Added");
 		
 	} catch (Exception ex) {
 		//out.print(ex);
-		out.print("Airport ID already exists");
+		
+%>
+
+Error:
+<br>
+<br>
+* Aircraft ID may already exist
+<br>
+* Airline ID may be invalid
+<br>
+* Fields were left blank
+
+<%	
 	}
 %>
+		
 </body>
 </html>

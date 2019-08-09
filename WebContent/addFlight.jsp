@@ -22,23 +22,35 @@
 	
 
 		//Get parameters from the HTML form at the HelloWorld.jsp
-		String id = request.getParameter("airport_id");
-		String name = request.getParameter("airport_name");
-		String city = request.getParameter("city");
-		String country = request.getParameter("country");
+		String flight_num = request.getParameter("flight_num");
+		String arrival_airport = request.getParameter("arrival_airport_id");
+		String depart_airport = request.getParameter("depart_airport_id");
+		String arrival_time = request.getParameter("arrival_time");
+		String depart_time = request.getParameter("depart_time");
+		String flight_type = request.getParameter("flight_type");
+		String aircraft_id = request.getParameter("aircraft_id");
+		String airline_id = request.getParameter("airline_id");
+		String stops = request.getParameter("stops");
+		String price = request.getParameter("price");
 
 
 		//Make an insert statement for the Sells table:
-		String insert = "INSERT INTO Airport(airport_id, name, city, country)"
-				+ "VALUES (?, ?, ?, ?)";
+		String insert = "INSERT INTO Flights(flight_num, arrival_airport_id, depart_airport_id, arrival_time, depart_time, flight_type, aircraft_id, airline_id, stops, Price)"
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 
 		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-		ps.setString(1, id);
-		ps.setString(2, name);
-		ps.setString(3, city);
-		ps.setString(4, country);
+		ps.setString(1, flight_num);
+		ps.setString(2, arrival_airport);
+		ps.setString(3, depart_airport);
+		ps.setString(4, arrival_time);
+		ps.setString(5, depart_time);
+		ps.setString(6, flight_type);
+		ps.setString(7, aircraft_id);
+		ps.setString(8, airline_id);
+		ps.setString(9, stops);
+		ps.setString(10, price);
 		//Run the query against the DB
 		ps.executeUpdate();
 
@@ -49,11 +61,11 @@
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
 
-		out.print("Airport Added");
+		out.print("Flight Added");
 		
 	} catch (Exception ex) {
 		//out.print(ex);
-		out.print("Airport ID already exists");
+		out.print("Error: Unable to add flight. Please make sure all fields are filled in correctly.");
 	}
 %>
 </body>
